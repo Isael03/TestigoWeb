@@ -1,7 +1,5 @@
 //Componentes de react
 import React, { Component } from 'react';
-//CSS
-import './Css/login.css';
 import {
     Form,
     Card,

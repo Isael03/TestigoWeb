@@ -6,7 +6,6 @@ import AudioPlayer from "react-h5-audio-player";
 import Mapas from './Mapa';
 // CSS
 import { Card, Container, Row, Col, Image } from "react-bootstrap";
-import "../Css/login.css";
 import { Contents } from "./contenido.json";
 import Imagen from "../Imagenes/default.jpg";
 import IconoMapa from "../Imagenes/854878.png";
@@ -51,9 +50,8 @@ class Contenido extends Component {
                       <AudioPlayer
                         src={Audio}
                         onPlay={e => console.log("Play")}
-                        className="col-auto"
                       />
-                      <Row className="mt-4 justify-content-md-center">
+                      <Row className="mt-4">
                         <Col className="d-flex align-items-center">
                           <figure className="icon-info">
                             <Image                           
@@ -66,7 +64,7 @@ class Contenido extends Component {
                             />
                           </figure>
                           
-                          <figure className="icon-info small-icon">
+                          <figure className="icon-info small-icon ">
                             <Image
                               src={Imagen2}
                               alt="Responsive image"

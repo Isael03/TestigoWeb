@@ -1,36 +1,4 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 #cuadro{
   padding-left: 40px;
   margin: 15px;
@@ -53,4 +21,31 @@
 #carta{
   width: 1140px;
   background-color: #FA2727;
+}
+
+.minh-90 {
+  height: 90vh;
+}
+
+.ires{
+  width: 80px;
+  height: 80px;
+  padding-left: 50px;
+  /* width: 32px;
+  height: 32px;
+  padding-left: 50px; */
+}
+.icon-info{
+  width: 100px;
+  height: 70px;
+  padding-left: 50px;
+}
+.small-icon{
+width: 75px;
+height: 65px; 
+}
+.pos{
+  position: absolute;
+  top: 0.4rem;
+  right: 1rem;
 }

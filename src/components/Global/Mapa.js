@@ -47,7 +47,6 @@ class Mapa extends Component {
 
         <Modal show={this.state.show} onHide={this.handleClose} size="xl">
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
           </Modal.Header>
           <Modal.Body>
                 <div style={{ height: '80vh', width: '100%' }}>
