@@ -1,0 +1,29 @@
+#body{
+    background-color: rgb(173, 172, 172);
+}
+.minh-90 {
+    height: 90vh;
+  }
+
+.ires{
+    width: 80px;
+    height: 80px;
+    padding-left: 50px;
+    /* width: 32px;
+    height: 32px;
+    padding-left: 50px; */
+}
+.icon-info{
+    width: 100px;
+    height: 70px;
+    padding-left: 50px;
+}
+.small-icon{
+  width: 75px;
+  height: 65px; 
+}
+.pos{
+    position: absolute;
+    top: 0.4rem;
+    right: 1rem;
+}
