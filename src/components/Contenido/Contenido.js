@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Player } from "video-react";
 import AudioPlayer from "react-h5-audio-player";
 //Componentes
-import Mapas from '../Mapa';
+import Mapas from '../Mapa/Mapa';
 //Css
 import { Card, Container, Row, Col, Image } from "react-bootstrap";
 import { Contents } from "./contenido.json";
