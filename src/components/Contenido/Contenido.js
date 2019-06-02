@@ -1,18 +1,16 @@
 //Componentes de React
 import React, { Component } from "react";
-import { Player } from "video-react";
 import AudioPlayer from "react-h5-audio-player";
 //Componentes
 import Mapas from '../Mapa/Mapa';
+import ImageViewer from '../ImageViewer';
+import VideoViewer from '../VideoViewer';
 //Css
 import { Card, Container, Row, Col, Image } from "react-bootstrap";
 import { Contents } from "./contenido.json";
 //Accesorios
-import Imagen from "./Image/default.jpg";
 import IconoMapa from "./Image/854878.png";
 import Imagen2 from "./Image/icono-calendario.png";
-
-
 
 class Contenido extends Component {
   constructor(props) {
@@ -21,12 +19,22 @@ class Contenido extends Component {
       Filtro: "Todo",
       Contents
     };
+    this.handleprintContent=this.handleprintContent.bind(this);
   }
+ 
   //Recibir metodo de mapa.js y mostrar modal
   acceptMethods = (handleShow) => {
     // Parent stores the method that the child passed
     this.handleShow = handleShow;
   };
+  //Filtrado de videos e imagenes
+  handleprintContent(type){
+     var typeContent=(type==="video") ? <VideoViewer/> : <ImageViewer/>;
+     return typeContent;
+  }
+  componentDidMount(){
+    this.setState(Contents)
+  }
 
   render() {
     const contenido = this.state.Contents.map((Contents, i) => {
@@ -38,21 +46,18 @@ class Contenido extends Component {
                 <Card.Body className="p-1">
                   <Row className="row no-gutters bg-light position-relative">
                     <Col className="col-sm-6 col-12  mb-md-0 p-md-4">
-                      <figure>
-                        <Image
-                          src="/Image/64099091_p0_master1200.jpg"
-                          className="w-100"
-                          alt="Responsive image"
-                        />
-                      </figure>
+                      {this.handleprintContent(Contents.tipo)}
                     </Col>
-                    <Col className="col-sm-6 position-static p-4 pl-md-0 pb-md-0">               
-                      <Card.Text>{Contents.comentario}</Card.Text>
+                    <Col className="col-sm-6 position-static p-4 pl-md-0 pb-md-0">  
+                    <Container>            
+                      <Card.Text>{Contents.comentario}</Card.Text>     
+                                 
                       <AudioPlayer
                         className="progress-bar-wrapper toggle-play-wrapper flex"
                         src="/audio/Isekai Quartet Ending - English Subtitles(MP3_128K).mp3"
                         onPlay={e => console.log("Play")}
                       />
+                                            
                       <Row className="mt-4">
                         <Col className="d-flex align-items-center">
                           <figure className="icon-info">
@@ -77,9 +82,10 @@ class Contenido extends Component {
                           </figure>
                           <small className="text-muted ml-3 ">
                             {Contents.fecha}
-                          </small>
+                          </small>                          
                         </Col>
                       </Row>
+                      </Container>     
                     </Col>
                   </Row>
                 </Card.Body>

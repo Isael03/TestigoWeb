@@ -13,6 +13,7 @@ import {
 } from 'react-bootstrap';
 //Accesorios
 import Filtro from './Image/filter-icon.png'
+
 class menu extends Component {
   constructor(props) {
     super(props);
@@ -44,9 +45,7 @@ class menu extends Component {
                         Testigo
                       </Badge>
                     </h3>
-                  </Navbar.Brand>
-                  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                  <Navbar.Collapse id="responsive-navbar-nav">
+                  </Navbar.Brand>                 
                     <Nav className="d-flex justify-content-end">
                       <Nav.Link  className="pos">
                         <svg
@@ -67,7 +66,7 @@ class menu extends Component {
                         </svg>
                       </Nav.Link>
                     </Nav>
-                  </Navbar.Collapse>
+
                 </Navbar>
 
                 <Container>
