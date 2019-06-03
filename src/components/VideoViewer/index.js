@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {Player} from 'video-react';
 //Css
 import '../../../node_modules/video-react/dist/video-react.css'
+/**Este componente muestra el reproductor de video */
 class index extends Component {
     render() {
         return (

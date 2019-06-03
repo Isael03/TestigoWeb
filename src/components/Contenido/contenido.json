@@ -2,22 +2,25 @@
     "Contents":[
         {
             "id":1,
-            "comentario": "Funciono",
+            "comentario": "",
             "fecha":"14:34:00 15/03/2017",
-            "tipo": "video"
+            "tipo": "video",
+            "audio":""
         },
         {
             "id":2,
             "comentario": "Le pegaron mucho",
             "fecha":"20:45:00 12/03/2017",
-            "tipo": "video"
+            "tipo": "video",
+            "audio":"/audio/Isekai Quartet Ending - English Subtitles(MP3_128K).mp3"
             
         },
         {
             "id":3,
-            "comentario": "Le pegaron mucho",
+            "comentario": "",
             "fecha":"20:45:00 12/03/2017",
-            "tipo": "imagen"
+            "tipo": "imagen",
+            "audio":"/audio/Isekai Quartet Ending - English Subtitles(MP3_128K).mp3"
         }
     ]
 }

@@ -13,19 +13,49 @@ import {
 } from 'react-bootstrap';
 //Accesorios
 import Filtro from './Image/filter-icon.png'
-
+import imgLogout from './Image/logout.png';
+/** Este componente sirve para mostrar el contenido que se encuentra en la BD*/
 class menu extends Component {
   constructor(props) {
     super(props);
+    /**Declaracion de estado */ 
+    this.state={
+      filter: "all"
+    }
+
+    /** vincular metodos*/
     this.onLogout=this.onLogout.bind(this);
+    this.watchAll=this.watchAll.bind(this);
+    this.watchVideos=this.watchVideos.bind(this);
+    this.watchImages=this.watchImages.bind(this);
   }
+
   
+  /**metodo para desloguearse */
   onLogout() {
     this.props.history.push('/');
   }
+  /**wacthAll cambia el estado del filtro a "all" */
+  watchAll(){
+    this.setState({
+      filter:"all"
+    })
+  }
+  /**wacthVideos cambia el estado del filtro a "only-videos" */
+  watchVideos(){
+    this.setState({     
+      filter:"only-videos"
+    })
+  }
+   /**wacthImages cambia el estado del filtro a "only-images" */
+  watchImages(){
+    this.setState({
+      filter:"only-images"
+    })
+  }
 
     render() {
-        //Cambiar de color el body a blanco
+        /** Cambiar de color el body a blanco*/
         document.body.style.backgroundColor = "white";
         return (
           <Container id="home" fluid  className="p-0">
@@ -46,27 +76,20 @@ class menu extends Component {
                       </Badge>
                     </h3>
                   </Navbar.Brand>                 
-                    <Nav className="d-flex justify-content-end">
-                      <Nav.Link  className="pos">
-                        <svg
-                          id="i-signout"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 32 32"
+                    <Nav className="d-flex justify-content-end" position="relative">
+                      <Nav.Link className="pos">
+                      <figure>
+                        <Image
+                          src={imgLogout}
                           width="20"
                           height="20"
-                          fill="none"
-                          stroke="gray"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
                           className="img-fluid"
                           onClick={this.onLogout}
-                        >
-                          <path d="M28 16 L8 16 M20 8 L28 16 20 24 M11 28 L3 28 3 4 11 4" />
-                        </svg>
+                        />
+                      </figure>
+                       
                       </Nav.Link>
                     </Nav>
-
                 </Navbar>
 
                 <Container>
@@ -85,13 +108,13 @@ class menu extends Component {
                       Filtrar
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item>Todo</Dropdown.Item>
-                      <Dropdown.Item>Videos</Dropdown.Item>
-                      <Dropdown.Item>Imagenes</Dropdown.Item>
+                      <Dropdown.Item onClick={this.watchAll}>Todo</Dropdown.Item>
+                      <Dropdown.Item onClick={this.watchVideos}>Videos</Dropdown.Item>
+                      <Dropdown.Item onClick={this.watchImages}>Imagenes</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </Container>
-                <Contenido />
+                <Contenido filter={this.state.filter}/>
           </Container>
         );
     }

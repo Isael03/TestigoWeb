@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 //Css
 import { Image, Modal} from "react-bootstrap";
+/**Este componente muestra las imagenes y las expande*/
 class index extends Component {
   constructor(props, context) {
     super(props, context);
@@ -13,11 +14,11 @@ class index extends Component {
       show: false
     };
   }
-  //Cerrar modal
+  /**Cerrar modal */
   handleClose() {
     this.setState({ show: false });
   }
-  //Abrir modal
+  /** Abrir modal*/
   handleShow() {
     this.setState({ show: true });
   }

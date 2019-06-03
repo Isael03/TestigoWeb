@@ -1,11 +1,10 @@
 //Componentes de React
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import AudioPlayer from "react-h5-audio-player";
 //Componentes
 import Mapas from "../Mapa/Mapa";
 import ImageViewer from "../ImageViewer";
 import VideoViewer from "../VideoViewer";
-import Audio from '../AudioPlayer';
 //Css
 import { Card, Container, Row, Col, Image } from "react-bootstrap";
 import { Contents } from "./contenido.json";
@@ -13,18 +12,15 @@ import { Contents } from "./contenido.json";
 import IconoMapa from "./Image/854878.png";
 import Imagen2 from "./Image/icono-calendario.png";
 
-/**Este componente incorpora a otros componentes para mostrarlos adecuadamente en el menu */
+
 class Contenido extends Component {
   constructor(props) {
     super(props);
-
     //vincular metodos
     this.handleprintContent = this.handleprintContent.bind(this);
-    this.handleprintAudio=this.handleprintAudio.bind(this);
-    this.handlePrintComment=this.handlePrintComment.bind(this);
 
-    /**Vincular propiedades */
-    var menuFilter = this.props.filter;
+    //vincular propiedades
+    var menuFilter = (this.filter = props.filter);
 
     //Declarar Estado
     this.state = {
@@ -49,18 +45,13 @@ class Contenido extends Component {
     typeContent = type === "video" ? <VideoViewer /> : <ImageViewer />;
     return typeContent;
   }
-  handleprintAudio(Is_there_audio){
-    var audio = Is_there_audio !== "" ? <Audio ruta={Is_there_audio}/> : <h2 className="text-center">No hay grabacion disponible</h2>     
-    return audio;
-  }
-  handlePrintComment(Is_there_comment){
-    var Comentario = Is_there_comment !== "" ?  <Card.Text>{Is_there_comment}</Card.Text>: <h2 className="pb-2 text-center">Sin Comentario</h2>;
-    return Comentario;
-  }
 
+  componentDidMount() {
+    this.setState(Contents);
+  }
 
   render() {
-        /**Recorrer arreglo */
+    /**Recorrer arreglo */
        const contenido = this.state.Contents.map((Contents, i) => {
           return (
             <Container className="my-3" key={Contents.id}>
@@ -74,8 +65,14 @@ class Contenido extends Component {
                       </Col>
                       <Col className="col-sm-6 position-static p-4 pl-md-0 pb-md-0">
                         <Container>
-                          {this.handlePrintComment(Contents.comentario)}
-                          {this.handleprintAudio(Contents.audio)}
+                          <Card.Text>{Contents.comentario}</Card.Text>
+  
+                          <AudioPlayer
+                            className="progress-bar-wrapper toggle-play-wrapper flex"
+                            src="/audio/Isekai Quartet Ending - English Subtitles(MP3_128K).mp3"
+                            onPlay={e => console.log("Play")}
+                          />
+  
                           <Row className="mt-4">
                             <Col className="d-flex align-items-center">
                               <figure className="icon-info">
@@ -122,8 +119,5 @@ class Contenido extends Component {
     );
   }
 }
-Contenido.propTypes = {
-  menuFilter: PropTypes.string
-};
 
 export default Contenido;

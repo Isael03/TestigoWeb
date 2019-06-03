@@ -1,5 +1,9 @@
-//Componentes de react
+/**Componentes de react*/
 import React, { Component } from 'react';
+/**Clases */
+import Operador from '../../ObjectConfig/Operador';
+import Aviso from '../../ObjectConfig/Aviso';
+/**Import para los Css*/
 import {
     Form,
     Card,
@@ -9,18 +13,25 @@ import {
     Col
 } from 'react-bootstrap'
 
-
+/**
+ * Este Componente sirve para mostrar el formulario de Ingreso a la plataforma
+ */
 class login extends Component {
   constructor(props) {
     super(props);
     this.onLogin = this.onLogin.bind(this);
   }
+  /**
+   * OnLogin te redirige al menu del sistema
+   */
   onLogin() {
     this.props.history.push('/menu');
 }
  
     render() {      
-        //Cambiar de color el body a gris
+        /**
+         * Cambiar de color el body a gris
+        */
         document.body.style.backgroundColor = "rgb(173, 172, 172)"
         return (
           <Container>
