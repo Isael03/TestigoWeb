@@ -1,3 +1,4 @@
+/**Esta clase es para instanciar al los usuarios del sistema  */
 class Operador{
     constructor(rut, contraseña) {
             this.Rut=rut;

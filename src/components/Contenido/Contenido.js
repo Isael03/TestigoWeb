@@ -77,7 +77,7 @@ class Contenido extends Component {
                           {this.handlePrintComment(Contents.comentario)}
                           {this.handleprintAudio(Contents.audio)}
                           <Row className="mt-4">
-                            <Col className="d-flex align-items-center">
+                            <Col className="d-flex ">
                               <figure className="icon-info">
                                 <Image
                                   src={IconoMapa}
@@ -89,7 +89,7 @@ class Contenido extends Component {
                                 />
                               </figure>
   
-                              <figure className="icon-info small-icon ">
+                              <figure className="icon-info ">
                                 <Image
                                   src={Imagen2}
                                   alt="Responsive image"

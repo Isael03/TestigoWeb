@@ -1,3 +1,4 @@
+
 class Aviso{
 
     contructor(Id, IdArchivo, Comentario, RutaAudio, Institucion, latitud, longitud){

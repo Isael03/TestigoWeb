@@ -1,15 +1,11 @@
 //Componentes de react
 import React, { Component } from 'react';
+/**Base de datos */
+import db from '../../ObjectConfig/Firebase/FirestoreConfig'
 //Componentes globales
-import Contenido from '../../components/Contenido/Contenido'
+import Contenido from '../Contenido/Contenido';
 //CSS
-import {
-    Navbar,
-    Dropdown,
-    Container,
-    Nav,
-    Badge,
-    Image,
+import {Navbar,Dropdown,Container,Nav,Badge,Image,
 } from 'react-bootstrap';
 //Accesorios
 import Filtro from './Image/filter-icon.png'
@@ -20,20 +16,35 @@ class menu extends Component {
     super(props);
     /**Declaracion de estado */ 
     this.state={
-      filter: "all"
+      filter: "all",
+      miembros:[]
     }
 
     /** vincular metodos*/
-    this.onLogout=this.onLogout.bind(this);
+    this.Logout=this.Logout.bind(this);
     this.watchAll=this.watchAll.bind(this);
     this.watchVideos=this.watchVideos.bind(this);
     this.watchImages=this.watchImages.bind(this);
   }
-
+/*   verificaUsuario = () => {
+    if () {
+      return this.props.history.push('/');
+    }
+  }; */
+/*   componentDidMount(){
+    db.collection('Institucion').get().then((snapShots) =>{
+      
+      this.setState({
+        miembros:snapShots.docs.map(doc=>{
+          console.log(doc.data())
+        })
+      })
+    })
+  } */
   
   /**metodo para desloguearse */
-  onLogout() {
-    this.props.history.push('/');
+  Logout() {
+    this.props.logout();
   }
   /**wacthAll cambia el estado del filtro a "all" */
   watchAll(){
@@ -55,6 +66,7 @@ class menu extends Component {
   }
 
     render() {
+      console.log(this.state.filter);
         /** Cambiar de color el body a blanco*/
         document.body.style.backgroundColor = "white";
         return (
@@ -84,7 +96,7 @@ class menu extends Component {
                           width="20"
                           height="20"
                           className="img-fluid"
-                          onClick={this.onLogout}
+                          onClick={this.Logout}
                         />
                       </figure>
                        
