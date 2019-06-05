@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import PropTypes from 'prop-types';
-
+/**
+ * @description Este componente renderiza el reproductor de audio
+ */
 class index extends Component {
 constructor(props) {
     super(props);
@@ -20,6 +22,9 @@ constructor(props) {
     );
   }
 }
+/**
+ *@param {*} ruta recibe la ruta del audio desde el componente Contenido 
+ */
 index.propTypes = {
     ruta: PropTypes.string
   };

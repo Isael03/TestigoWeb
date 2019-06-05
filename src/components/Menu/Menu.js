@@ -1,64 +1,55 @@
-//Componentes de react
 import React, { Component } from 'react';
-/**Base de datos */
 import db from '../../ObjectConfig/Firebase/FirestoreConfig'
-//Componentes globales
 import Contenido from '../Contenido/Contenido';
-//CSS
 import {Navbar,Dropdown,Container,Nav,Badge,Image,
 } from 'react-bootstrap';
-//Accesorios
 import Filtro from './Image/filter-icon.png'
 import imgLogout from './Image/logout.png';
-/** Este componente sirve para mostrar el contenido que se encuentra en la BD*/
+/** 
+ *@description Este componente sirve para mostrar el contenido que se encuentra en la BD
+ */
 class menu extends Component {
+  /**
+   * @constructor
+   */
   constructor(props) {
     super(props);
-    /**Declaracion de estado */ 
     this.state={
       filter: "all",
       miembros:[]
     }
 
-    /** vincular metodos*/
     this.Logout=this.Logout.bind(this);
     this.watchAll=this.watchAll.bind(this);
     this.watchVideos=this.watchVideos.bind(this);
     this.watchImages=this.watchImages.bind(this);
   }
-/*   verificaUsuario = () => {
-    if () {
-      return this.props.history.push('/');
-    }
-  }; */
-/*   componentDidMount(){
-    db.collection('Institucion').get().then((snapShots) =>{
-      
-      this.setState({
-        miembros:snapShots.docs.map(doc=>{
-          console.log(doc.data())
-        })
-      })
-    })
-  } */
-  
-  /**metodo para desloguearse */
+
+  /**
+   * @description Desloguearse, invoca el metodo desde el componente Dashboard
+   */
   Logout() {
     this.props.logout();
   }
-  /**wacthAll cambia el estado del filtro a "all" */
+  /**
+   * @description wacthAll cambia el estado del filtro a "all" 
+   */
   watchAll(){
     this.setState({
       filter:"all"
     })
   }
-  /**wacthVideos cambia el estado del filtro a "only-videos" */
+  /**
+   *@description wacthVideos cambia el estado del filtro a "only-videos" 
+   */
   watchVideos(){
     this.setState({     
       filter:"only-videos"
     })
   }
-   /**wacthImages cambia el estado del filtro a "only-images" */
+   /**
+    *@description wacthImages cambia el estado del filtro a "only-images" 
+    */
   watchImages(){
     this.setState({
       filter:"only-images"
@@ -67,7 +58,6 @@ class menu extends Component {
 
     render() {
       console.log(this.state.filter);
-        /** Cambiar de color el body a blanco*/
         document.body.style.backgroundColor = "white";
         return (
           <Container id="home" fluid  className="p-0">

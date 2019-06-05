@@ -3,14 +3,11 @@ import {Button,Modal} from 'react-bootstrap';
 //import { Map, GoogleApiWrapper, InfoWindow, Marker} from 'google-maps-react';
 import GoogleMapReact from 'google-map-react';
 
-// const mapStyles = {
-//   width: '100%',
-//   height: '100%'
-//npm install --save google-map-react
-// };
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-/**Este componente despliega un modal que contiene al mapa */
+/**
+ * Este componente despliega un modal que contiene al mapa 
+ */
 class Mapa extends Component {
   constructor(props, context) {
     super(props, context);
@@ -22,19 +19,28 @@ class Mapa extends Component {
       show: false,
     };
   }
-  /**Pasar Metodo al componente contenido */
+  /**
+   * Pasar Metodo al componente contenido 
+   */
    componentDidMount() { 
     this.props.shareMethods(this.handleShow.bind(this))
   } 
-  /**Cerrar modal */
+  /**
+   * Cerrar modal 
+   */
   handleClose() {
     this.setState({ show: false });
   }
-  /**Abrir modal */
+  /**
+  Abrir modal 
+  */
   handleShow() {
     this.setState({ show: true });
   }
-  //segundo mapa este funciona
+
+  /**
+   * Establecer coordenadas del mapa
+   */
   static defaultProps = {
     center: {
       lat: -27.36,

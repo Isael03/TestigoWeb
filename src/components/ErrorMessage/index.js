@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Alert} from "react-bootstrap";
-
+/**
+ * Muestra un mensaje error
+ */
 class index extends Component {
     render() {
         return (

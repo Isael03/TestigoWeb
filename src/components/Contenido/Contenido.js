@@ -1,58 +1,67 @@
-//Componentes de React
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-//Componentes
 import Mapas from "../Mapa/Mapa";
 import ImageViewer from "../ImageViewer";
 import VideoViewer from "../VideoViewer";
 import Audio from '../AudioPlayer';
-//Css
 import { Card, Container, Row, Col, Image } from "react-bootstrap";
 import { Contents } from "./contenido.json";
-//Accesorios
 import IconoMapa from "./Image/854878.png";
 import Imagen2 from "./Image/icono-calendario.png";
 
-/**Este componente incorpora a otros componentes para mostrarlos adecuadamente en el menu */
+/**
+* @description Este componente incorpora a otros componentes para mostrarlos adecuadamente en su interior
+*/
 class Contenido extends Component {
+/**
+ * @constructor
+ */
   constructor(props) {
     super(props);
 
-    //vincular metodos
     this.handleprintContent = this.handleprintContent.bind(this);
     this.handleprintAudio=this.handleprintAudio.bind(this);
     this.handlePrintComment=this.handlePrintComment.bind(this);
 
-    /**Vincular propiedades */
     var menuFilter = this.props.filter;
 
-    //Declarar Estado
     this.state = {
       Contents,
       ViewContents: menuFilter
     };
   }
-  //Cambiar estado segun el filtrado de contenido
+  /**
+   * @description Cambia el estado de ViewContents, que establece el parametro del filtrado
+   */
   componentWillReceiveProps(menuFilter, type) {
     this.setState({ ViewContents: menuFilter });
   }
 
-  //Recibir metodo de mapa.js y mostrar modal
+  /** 
+   * @description Recibir metodo de mapa.js y mostrar modal
+   */
   acceptMethods = handleShow => {
-    // Parent stores the method that the child passed
     this.handleShow = handleShow;
   };
 
-  //Filtrado de videos e imagenes
+  /** 
+   *@description  Imprime el las imagenes o videos en los contenedores que le correspondan
+   */
   handleprintContent(type) {
     var typeContent;
     typeContent = type === "video" ? <VideoViewer /> : <ImageViewer />;
     return typeContent;
   }
+  /**
+   *@description Comprueba que exista una ruta para el audio
+   */
   handleprintAudio(Is_there_audio){
     var audio = Is_there_audio !== "" ? <Audio ruta={Is_there_audio}/> : <h2 className="text-center">No hay grabacion disponible</h2>     
     return audio;
   }
+  /**
+   *@description Comprueba que exista un comentario
+   */
   handlePrintComment(Is_there_comment){
     var Comentario = Is_there_comment !== "" ?  <Card.Text>{Is_there_comment}</Card.Text>: <h2 className="pb-2 text-center">Sin Comentario</h2>;
     return Comentario;
@@ -60,7 +69,9 @@ class Contenido extends Component {
 
 
   render() {
-        /**Recorrer arreglo */
+        /**
+         * Recorrer json
+        */
        const contenido = this.state.Contents.map((Contents, i) => {
           return (
             <Container className="my-3" key={Contents.id}>
@@ -76,9 +87,9 @@ class Contenido extends Component {
                         <Container>
                           {this.handlePrintComment(Contents.comentario)}
                           {this.handleprintAudio(Contents.audio)}
-                          <Row className="mt-4">
+                          <Row className="mt-4 ">
                             <Col className="d-flex ">
-                              <figure className="icon-info">
+                              <figure className="icon-info ires">
                                 <Image
                                   src={IconoMapa}
                                   alt="Responsive image"
@@ -89,18 +100,21 @@ class Contenido extends Component {
                                 />
                               </figure>
   
-                              <figure className="icon-info ">
+                              <figure className="ires ">
                                 <Image
                                   src={Imagen2}
                                   alt="Responsive image"
-                                  width="100%"
+                                  width="10%"
                                   max-width="100%"
                                   height="auto"
+                                  className="icon-info small-icon"
+                                  
                                 />
-                              </figure>
-                              <small className="text-muted ml-3 ">
+                                 <small className="text-muted ires">
                                 {Contents.fecha}
                               </small>
+                              </figure>
+                             
                             </Col>
                           </Row>
                         </Container>
@@ -112,9 +126,11 @@ class Contenido extends Component {
             </Row>
           </Container>
           );
-    }).reverse(); 
-    //Compartir metodo de mostrar modal
+    }).reverse();  
     return (
+    /**
+     *@description Compartir metodo de mostrar modal 
+     */
       <div>
         <Mapas shareMethods={this.acceptMethods} />
         {contenido}
@@ -122,6 +138,9 @@ class Contenido extends Component {
     );
   }
 }
+/**
+ *@param {*} menuFilter contiene informacion del filtrado, es recibida desde el componente menu
+ */
 Contenido.propTypes = {
   menuFilter: PropTypes.string
 };

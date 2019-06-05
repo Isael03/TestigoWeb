@@ -13,8 +13,10 @@ import db from "../../ObjectConfig/Firebase/FirestoreConfig";
 import Operador from "../../ObjectConfig/Operador";
 import Institucion from "../../ObjectConfig/Institucion";
 import ErrorMessage from "../ErrorMessage";
-import { handleError } from "video-react/lib/actions/video";
 
+/**
+ * Formulario de login e interaccion
+ */
 class index extends Component {
   constructor(props, context) {
     super(props, context);
@@ -24,20 +26,22 @@ class index extends Component {
       password: "",
       open: false
     };
-    this.error = React.createRef();
+
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  //Invocar el metodo para acceder al dashboard
+  /**
+   * Invocar el metodo recoger datos e iniciar sesion
+   */
   handleSubmit(e, open) {
     e.preventDefault();
     var operador = new Operador(this.state.rut, this.state.password);
-    //var institucion =new Institucion(this.state.institution);
-    //console.log(institucion.Nombre);
+    var institucion =new Institucion(1,this.state.institution);
+    console.log(institucion.Nombre);
     try {
       var confirm = db
         .collection("Institucion")
-        .doc(this.state.institution)
+        .doc(institucion.Nombre)
         .collection("Miembros")
         .doc(operador.rut);
     } catch (error) {
@@ -66,16 +70,11 @@ class index extends Component {
           //
         });
     } catch (error) {}
-
-    /*
-        this.setState({
-          institution: 'Institucion',
-          rut: '',
-          password: ''
-        }); */
   }
 
-  /**Captar lo escrito en los inputs */
+  /**
+   * Captar lo escrito en los inputs 
+   */
   handleInputChange(e) {
     const { value, name } = e.target;
     this.setState({
@@ -84,6 +83,7 @@ class index extends Component {
   }
 
   render() {
+    console.log(this.state);
     const { open } = this.state;
     /** Cambiar de color el body a gris*/
     document.body.style.backgroundColor = "rgb(173, 172, 172)";

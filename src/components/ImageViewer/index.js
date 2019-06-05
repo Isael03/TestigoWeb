@@ -1,8 +1,8 @@
-//Componentes de react
 import React, { Component } from 'react';
-//Css
 import { Image, Modal} from "react-bootstrap";
-/**Este componente muestra las imagenes y las expande*/
+/**
+* Este componente muestra las imagenes y las expande
+*/
 class index extends Component {
   constructor(props, context) {
     super(props, context);
@@ -14,11 +14,15 @@ class index extends Component {
       show: false
     };
   }
-  /**Cerrar modal */
+  /**
+   * Cerrar modal 
+   */
   handleClose() {
     this.setState({ show: false });
   }
-  /** Abrir modal*/
+  /** 
+   *Abrir modal
+   */
   handleShow() {
     this.setState({ show: true });
   }
@@ -29,7 +33,7 @@ class index extends Component {
       <div>
         <figure>
           <Image
-            src="/Image/64099091_p0_master1200.jpg"
+            src="/Image/pelea.jpeg"
             className="w-100"
             alt="Responsive image"
             onClick={this.handleShow}
@@ -37,7 +41,7 @@ class index extends Component {
         </figure>
           <Modal show={this.state.show} onHide={this.handleClose} size="xl" className="d-flex align-items-center">   
               <Image
-                src="/Image/64099091_p0_master1200.jpg"
+                src="/Image/pelea.jpeg"
                 className="w-100 h-auto"
                 alt="Responsive image"
                 onClick={this.handleClose}
