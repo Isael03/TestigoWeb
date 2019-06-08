@@ -18,7 +18,7 @@ class Contenido extends Component {
  */
   constructor(props) {
     super(props);
-
+    
     this.handleprintContent = this.handleprintContent.bind(this);
     this.handleprintAudio=this.handleprintAudio.bind(this);
     this.handlePrintComment=this.handlePrintComment.bind(this);
@@ -30,6 +30,17 @@ class Contenido extends Component {
       ViewContents: menuFilter
     };
   }
+  componentDidMount(){
+   
+    /* db.child()
+
+    fb.child('user/123').once('value', function(userSnap) {
+      fb.child('media/123').once('value', function(mediaSnap) {
+          show( extend({}, userSnap.val(), mediaSnap.val()) );
+      });
+  }); */
+  }
+
   /**
    * @description Cambia el estado de ViewContents, que establece el parametro del filtrado
    */

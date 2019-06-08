@@ -19,7 +19,7 @@ class login extends Component {
 
   render() {   
     return (
-      <div><FormLogin onSubmit={this.onSubmit}/></div>
+      <div><FormLogin onSubmit={this.onSubmit} /></div>
     );
   }
 }

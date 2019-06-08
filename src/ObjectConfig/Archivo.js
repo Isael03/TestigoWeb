@@ -43,6 +43,7 @@ class Archivo{
      *  @return {date} para la fecha
      */
     get fecha(){
+        this.Fecha = new Date(this.Fecha);
         return this.Fecha;
     }
     /**

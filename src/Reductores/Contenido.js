@@ -1,14 +1,10 @@
-//Componentes de React
 import React, { Component } from "react";
 import AudioPlayer from "react-h5-audio-player";
-//Componentes
 import Mapas from "../Mapa/Mapa";
 import ImageViewer from "../ImageViewer";
 import VideoViewer from "../VideoViewer";
-//Css
 import { Card, Container, Row, Col, Image } from "react-bootstrap";
-import { Contents } from "./contenido.json";
-//Accesorios
+import { Contents } from "./contenido.json.js";
 import IconoMapa from "./Image/854878.png";
 import Imagen2 from "./Image/icono-calendario.png";
 
@@ -16,13 +12,11 @@ import Imagen2 from "./Image/icono-calendario.png";
 class Contenido extends Component {
   constructor(props) {
     super(props);
-    //vincular metodos
+
     this.handleprintContent = this.handleprintContent.bind(this);
 
-    //vincular propiedades
     var menuFilter = (this.filter = props.filter);
 
-    //Declarar Estado
     this.state = {
       Contents,
       ViewContents: menuFilter

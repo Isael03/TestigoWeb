@@ -12,12 +12,18 @@ import {
 import db from "../../ObjectConfig/Firebase/FirestoreConfig";
 import Operador from "../../ObjectConfig/Operador";
 import Institucion from "../../ObjectConfig/Institucion";
-import ErrorMessage from "../ErrorMessage";
+import AppContext from '../AppContext'
 
 /**
- * Formulario de login e interaccion
+ * @class Formulario de login e interaccion
  */
 class index extends Component {
+  static contextType = AppContext;
+  /**
+   * @constructor 
+   * @property {*} props - Para usar las propiedades
+   * @property {*} context - Para usar el contexto
+   */
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -26,17 +32,19 @@ class index extends Component {
       password: "",
       open: false
     };
-
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.changeIntitution=this.props.changeInstitucion;
   }
   /**
-   * Invocar el metodo recoger datos e iniciar sesion
+   * @fuction Invocar el metodo para recoger datos e iniciar sesion
+   * @property {*} - Indica el evento
+   * @property {boolean} open - variable open que aparece en el render 
    */
   handleSubmit(e, open) {
     e.preventDefault();
     var operador = new Operador(this.state.rut, this.state.password);
-    var institucion =new Institucion(1,this.state.institution);
+    var institucion = new Institucion(this.state.institution, this.state.institution);
     console.log(institucion.Nombre);
     try {
       var confirm = db
@@ -69,26 +77,28 @@ class index extends Component {
           console.log("Error getting document", err);
           //
         });
-    } catch (error) {}
-  }
 
+    } catch (error) {}
+
+  }
+  
   /**
-   * Captar lo escrito en los inputs 
+   *@fuction Captar lo escrito en los inputs
+   *@property {*} e - evento que se desarrolla 
    */
   handleInputChange(e) {
     const { value, name } = e.target;
     this.setState({
       [name]: value
     });
+    this.context.changeInstitution(value);
   }
 
   render() {
-    console.log(this.state);
     const { open } = this.state;
     /** Cambiar de color el body a gris*/
     document.body.style.backgroundColor = "rgb(173, 172, 172)";
     return (
-      <div>
         <Container>
           <Row className="justify-content-center align-items-center minh-90">
             <Col xs={12} md={5}>
@@ -99,7 +109,11 @@ class index extends Component {
                   </Card.Title>
                   <Collapse in={this.state.open} height={1}>
                     <div id="example-collapse-text">
-                      <ErrorMessage />
+                      <Alert variant="danger">
+                        <p className="text-center">
+                          Datos Incorrectos. Intente de nuevo.
+                        </p>
+                      </Alert>
                     </div>
                   </Collapse>
                   <Form
@@ -157,7 +171,6 @@ class index extends Component {
             </Col>
           </Row>
         </Container>
-      </div>
     );
   }
 }

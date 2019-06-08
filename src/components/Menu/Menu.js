@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import db from '../../ObjectConfig/Firebase/FirestoreConfig'
 import Contenido from '../Contenido/Contenido';
 import {Navbar,Dropdown,Container,Nav,Badge,Image,
 } from 'react-bootstrap';
 import Filtro from './Image/filter-icon.png'
 import imgLogout from './Image/logout.png';
+import AppContext from '../AppContext';
+import WatchVideos from '../Contenido/VideoContent';
+import SeeImages from '../Contenido/ImageContent';
 /** 
  *@description Este componente sirve para mostrar el contenido que se encuentra en la BD
  */
 class menu extends Component {
+    static contextType = AppContext
+    
   /**
    * @constructor
    */
@@ -18,11 +22,11 @@ class menu extends Component {
       filter: "all",
       miembros:[]
     }
-
     this.Logout=this.Logout.bind(this);
     this.watchAll=this.watchAll.bind(this);
     this.watchVideos=this.watchVideos.bind(this);
     this.watchImages=this.watchImages.bind(this);
+    this.handleChangeView= this.handleChangeView.bind(this);
   }
 
   /**
@@ -54,6 +58,23 @@ class menu extends Component {
     this.setState({
       filter:"only-images"
     })
+  }
+  /**
+   * @description handleChangeView cambia el contenido de la pantalla dependediendo del estado del filter
+   * @param {string} filter - proviene de this.state.filter
+   */
+  handleChangeView(filter){
+    var View;
+    if(filter==="all"){
+      View=<Contenido filter={this.state.filter}/>
+    }
+    if(filter==="only-videos"){
+      View=<WatchVideos filter={this.state.filter}/>
+    }
+    if(filter==="only-images"){
+      View=<SeeImages filter={this.state.filter}/>
+    }
+    return View;   
   }
 
     render() {
@@ -115,8 +136,8 @@ class menu extends Component {
                       <Dropdown.Item onClick={this.watchImages}>Imagenes</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-                </Container>
-                <Contenido filter={this.state.filter}/>
+                </Container>             
+                {this.handleChangeView(this.state.filter)}
           </Container>
         );
     }
