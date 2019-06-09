@@ -9,7 +9,6 @@ class Institucion{
     */
     constructor(id,nombre){
         this.Id=id;
-        this.Nombre=nombre;
     }
     /**
      * @description Get de id
@@ -17,13 +16,6 @@ class Institucion{
      */
     get id(){
         return this.Id;
-    }
-    /**
-     * @description Get de nombre
-     * @return {string} 
-     */
-    get nombre(){
-        return this.Nombre;
     }
 }
 export default Institucion;

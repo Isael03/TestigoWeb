@@ -30,7 +30,7 @@ class VideoContent extends Component {
   /**
    * @description Cambia el estado de ViewContents, que establece el parametro del filtrado
    */
-  componentWillReceiveProps(menuFilter, type) {
+  componentWillReceiveProps(menuFilter) {
     this.setState({ ViewContents: menuFilter });
   }
 
@@ -51,6 +51,7 @@ class VideoContent extends Component {
     typeContent = type === "video" ? <VideoViewer /> : <ImageViewer />;
     return typeContent;
   }
+
   /**
    *@description Comprueba que exista una ruta para el audio
    *@param {string} Is_there_audio - Ruta del audio
@@ -64,6 +65,7 @@ class VideoContent extends Component {
       );
     return audio;
   }
+
   /**
    *@description Comprueba que exista un comentario
    *@param {string} Is_there_comment - es el comentario asignado
@@ -77,6 +79,7 @@ class VideoContent extends Component {
       );
     return Comentario;
   }
+  
   render() {
     /**
      * Recorrer json

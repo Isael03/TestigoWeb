@@ -9,10 +9,12 @@ import {
   Alert,
   Collapse
 } from "react-bootstrap";
-import db from "../../ObjectConfig/Firebase/FirestoreConfig";
+//import db from "../../ObjectConfig/Firebase/FirestoreConfig";
 import Operador from "../../ObjectConfig/Operador";
 import Institucion from "../../ObjectConfig/Institucion";
 import AppContext from '../AppContext'
+import firebase from "firebase/app";
+import database from '../../ObjectConfig/Firebase/RealtimeDatabase'
 
 /**
  * @class Formulario de login e interaccion
@@ -35,51 +37,33 @@ class index extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.changeIntitution=this.props.changeInstitucion;
+    this.onSubmit=this.props.onSubmit;
   }
   /**
    * @fuction Invocar el metodo para recoger datos e iniciar sesion
-   * @property {*} - Indica el evento
-   * @property {boolean} open - variable open que aparece en el render 
+   * @property {*} - Indica el evento en el que se encuentra
+   * @property {boolean} open - variable open que aparece en el render y se usa para cambiar el estado de this.open
    */
   handleSubmit(e, open) {
     e.preventDefault();
+
     var operador = new Operador(this.state.rut, this.state.password);
-    var institucion = new Institucion(this.state.institution, this.state.institution);
-    console.log(institucion.Nombre);
-    try {
-      var confirm = db
-        .collection("Institucion")
-        .doc(institucion.Nombre)
-        .collection("Miembros")
-        .doc(operador.rut);
-    } catch (error) {
-      console.error(error);
-      this.setState({ open: !open });
-    }
+     var service =new Institucion(this.state.institution);
 
-    try {
-      var getDoc = confirm
-        .get()
-        .then(doc => {
-          if (!doc.exists) {
-            console.log("No such document!");
-            this.setState({ open: !open });
-          } else {
-            //console.log('Document data:', doc.data());
-            if (doc.data().contraseña === operador.Contraseña) {
-              this.props.onSubmit();
-            } else {
-              this.setState({ open: !open });
-            }
-          }
-        })
-        .catch(err => {
-          console.log("Error getting document", err);
-          //
-        });
+     //nota: mover a otro sitio e invocarlo aqui
 
-    } catch (error) {}
-
+     return firebase.database().ref("Institucion/"+service.id).ref.once("value").then(snapshot => {
+      if((snapshot.child(operador.rut).exists()) && (snapshot.child(operador.rut+"/Contrasena").val()).toString() === operador.contraseña){
+        console.log("Validated");
+        this.context.changeValidation(true);
+        this.props.onSubmit();
+      }else{
+        this.setState({ open: !open });
+      }
+    }).catch(err=>{
+        console.log(err);
+        this.setState({ open: !open });
+    });      
   }
   
   /**
@@ -96,7 +80,6 @@ class index extends Component {
 
   render() {
     const { open } = this.state;
-    /** Cambiar de color el body a gris*/
     document.body.style.backgroundColor = "rgb(173, 172, 172)";
     return (
         <Container>

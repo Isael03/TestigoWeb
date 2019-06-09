@@ -78,6 +78,7 @@ class menu extends Component {
   }
 
     render() {
+      this.context.Validated();
       console.log(this.state.filter);
         document.body.style.backgroundColor = "white";
         return (
