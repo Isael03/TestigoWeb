@@ -77,6 +77,9 @@ class index extends Component {
     if(name==="institution"){
       this.context.changeInstitution(value);
     }
+    if(name==="rut"){
+      this.context.ChangeState(name, value);
+    }
   }
 
   render() {

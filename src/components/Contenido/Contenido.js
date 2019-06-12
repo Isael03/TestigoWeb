@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
 import Mapas from "../Mapa/Mapa";
 import ImageViewer from "../ImageViewer";
 import VideoViewer from "../VideoViewer";
 import Audio from '../AudioPlayer';
 import { Card, Container, Row, Col, Image } from "react-bootstrap";
-import { Contents } from "./contenido.json";
 import IconoMapa from "./Image/854878.png";
 import Imagen2 from "./Image/icono-calendario.png";
-import Cookies from 'universal-cookie';
-import firebase from "firebase/app";
 
 /**
 * @description Este componente incorpora a otros componentes para mostrarlos adecuadamente en su interior
@@ -18,40 +14,11 @@ class Contenido extends Component {
 /**
  * @constructor
  */
-
   constructor(props) {
     super(props);
-    /**
-   *@param {*} menuFilter contiene informacion del filtrado, es recibida desde el componente menu
-    */
-    Contenido.propTypes = {
-      menuFilter: PropTypes.string
-    };
     this.handleprintContent = this.handleprintContent.bind(this);
     this.handleprintAudio=this.handleprintAudio.bind(this);
     this.handlePrintComment=this.handlePrintComment.bind(this);
-
-    var menuFilter = this.props.filter;
-
-    this.state = {
-      Contents,
-      ViewContents: menuFilter,
-      filesdb: []
-    };
-  }
-  componentDidMount(){
-    var cookies = new Cookies();
-    var service =cookies.get('institution'); 
-    console.log(service);
-
-    var list = [];
-    const refArchivos= firebase.database().ref("/Archivos/");
-    refArchivos.once("value", snapshot => {
-      list= snapshot.val()
-        this.setState({
-          filesdb: list
-      })      
-})   
   }
 
   /**

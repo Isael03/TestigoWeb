@@ -8,7 +8,8 @@ class AppProvider extends Component {
     super(props);
     this.state = {
       institution: null,
-      validation: false
+      validation: false,
+      user:false
     };
     this.changeInstitution = this.changeInstitution.bind(this);
     this.handleChangeValidation.bind(this);
@@ -29,11 +30,22 @@ class AppProvider extends Component {
     cookies.set("institution", nameService, { path: "/" });
      //console.log(cookies.get('institution')); 
   }
-  //En prueba
+  /**
+   * @description Metodo que actualiza los estado de manera no especifica, por lo que cualquier estado podria actualizarce usando este metodo. Ademas que genera una cokkie con el rut del usuario
+   * @param {string} name - Recibe el nombre que hace referencia la estado
+   * @param {string} value - Valor por cual se actualizara el estado 
+   */
   ChangeState(name, value) {
     this.setState({
       [name]: value
     });
+    if(name==="rut"){
+      var cookies = new Cookies();
+      cookies.set("rut", value, { path: "/" });
+      this.setState({
+        user:true
+      })
+    }    
   }
 
   /**
@@ -51,7 +63,8 @@ class AppProvider extends Component {
    * @description Metodo que compara el estado de validation. Si el estado de validation es falso, devuelve al usuario al login
    */
   Validated() {
-    if (this.state.validation === false) {
+    var cookies = new Cookies();
+    if ((this.state.validation === false) && (cookies.get('rut') === null)) {
       return this.props.history.push("/");
     }
   }
@@ -63,11 +76,11 @@ class AppProvider extends Component {
     this.setState({
       institution: null,
       validation: false,
+      user:false
     });
     var cookies = new Cookies();
-    cookies.remove('institution')
-    console.log("cookie: "+ cookies.get('institution')); 
-    console.log("Valores por defecto");
+    cookies.remove('institution');
+    cookies.remove('rut');
   }
   render() {
     return (
@@ -77,7 +90,8 @@ class AppProvider extends Component {
           changeInstitution: this.changeInstitution,
           changeValidation: this.handleChangeValidation,
           destroySession: this.destroySession,
-          Validated: this.Validated
+          Validated: this.Validated,
+          ChangeState:this.ChangeState
         }}
       >
         {this.props.children}

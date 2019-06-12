@@ -11,9 +11,8 @@ import {
 import Filtro from "./Image/filter-icon.png";
 import imgLogout from "./Image/logout.png";
 import AppContext from "../AppContext";
-import WatchVideos from "../Contenido/VideoContent";
-import SeeImages from "../Contenido/ImageContent";
 import firebase from "firebase/app";
+import Cookies from 'universal-cookie'
 /**
  *@description Este componente sirve para mostrar el contenido que se encuentra en la BD
  */
@@ -36,10 +35,28 @@ class menu extends Component {
     this.watchImages = this.watchImages.bind(this);
     this.handleChangeView = this.handleChangeView.bind(this);
   }
+  /**
+   * @description Metodo que se inicia al ejecutar este componente. Este recoje la cookie de intitution para saber que institucion esta logueada, ademas de recojer datos de la bd y traspasarlos al state filesdb.
+   */
   componentDidMount() {
+    var cookies = new Cookies();
+    cookies.get('institution'); 
     var list = [];
     const refArchivos = firebase.database().ref("/Archivos/");
     refArchivos.on("value", snapshot => {
+      list = snapshot.val();
+      this.setState({
+        filesdb: list
+      });
+    });
+  }
+  /**
+   * @description Metodo que se ejecuta al cerrar el componente. Este cierra la conexion con la bd y deja de actualizar el estado.
+   */
+  componentWillUnmount(){
+    var list = [];
+    const refArchivos = firebase.database().ref("/Archivos/");
+    refArchivos.off("value", snapshot => {
       list = snapshot.val();
       this.setState({
         filesdb: list
@@ -83,25 +100,31 @@ class menu extends Component {
    */
   handleChangeView(filter) {
     var View;
+    //Videos e imagenes
     if (filter === "all") {
-      View = this.state.filesdb.map((filesdb, i) => { 
-
+      View = this.state.filesdb.map((filesdb, i) => {
         return <Contenido tipo={filesdb.Tipo} fecha={filesdb.Fecha} key={i} comentario={filesdb.Comentario} audio={filesdb.Audio} archivo={filesdb.Archivo} />;
-      })
-      //View = <Contenido  />;
+      }).reverse();
     }
+    //Para videos
     if (filter === "only-videos") {
-      View = <WatchVideos filter={this.state.filter} />;
+      View = this.state.filesdb.map((filesdb, i) => { 
+        if(filesdb.Tipo==="Video"){
+          return <Contenido tipo={filesdb.Tipo} fecha={filesdb.Fecha} key={i} comentario={filesdb.Comentario} audio={filesdb.Audio} archivo={filesdb.Archivo} />;}         
+      }).reverse();
     }
+    //Para imagenes
     if (filter === "only-images") {
-      View = <SeeImages filter={this.state.filter} />;
+      View = this.state.filesdb.map((filesdb, i) => {
+        if(filesdb.Tipo==="Imagen"){
+          return <Contenido tipo={filesdb.Tipo} fecha={filesdb.Fecha} key={i} comentario={filesdb.Comentario} audio={filesdb.Audio} archivo={filesdb.Archivo} />;}         
+      }).reverse();
     }
     return View;
   }
 
   render() {
     this.context.Validated();
-    console.log(this.state.filter);
     document.body.style.backgroundColor = "white";
     return (
       <Container id="home" fluid className="p-0">
