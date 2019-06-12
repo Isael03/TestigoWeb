@@ -8,6 +8,8 @@ import { Card, Container, Row, Col, Image } from "react-bootstrap";
 import { Contents } from "./contenido.json";
 import IconoMapa from "./Image/854878.png";
 import Imagen2 from "./Image/icono-calendario.png";
+import Cookies from 'universal-cookie';
+import firebase from "firebase/app";
 
 /**
 * @description Este componente incorpora a otros componentes para mostrarlos adecuadamente en su interior
@@ -16,9 +18,15 @@ class Contenido extends Component {
 /**
  * @constructor
  */
+
   constructor(props) {
     super(props);
-    
+    /**
+   *@param {*} menuFilter contiene informacion del filtrado, es recibida desde el componente menu
+    */
+    Contenido.propTypes = {
+      menuFilter: PropTypes.string
+    };
     this.handleprintContent = this.handleprintContent.bind(this);
     this.handleprintAudio=this.handleprintAudio.bind(this);
     this.handlePrintComment=this.handlePrintComment.bind(this);
@@ -27,18 +35,23 @@ class Contenido extends Component {
 
     this.state = {
       Contents,
-      ViewContents: menuFilter
+      ViewContents: menuFilter,
+      filesdb: []
     };
   }
   componentDidMount(){
-   
-    /* db.child()
+    var cookies = new Cookies();
+    var service =cookies.get('institution'); 
+    console.log(service);
 
-    fb.child('user/123').once('value', function(userSnap) {
-      fb.child('media/123').once('value', function(mediaSnap) {
-          show( extend({}, userSnap.val(), mediaSnap.val()) );
-      });
-  }); */
+    var list = [];
+    const refArchivos= firebase.database().ref("/Archivos/");
+    refArchivos.once("value", snapshot => {
+      list= snapshot.val()
+        this.setState({
+          filesdb: list
+      })      
+})   
   }
 
   /**
@@ -60,7 +73,7 @@ class Contenido extends Component {
    */
   handleprintContent(type) {
     var typeContent;
-    typeContent = type === "video" ? <VideoViewer /> : <ImageViewer />;
+    typeContent = type === "Video" ? <VideoViewer /> : <ImageViewer />;
     return typeContent;
   }
   /**
@@ -80,24 +93,25 @@ class Contenido extends Component {
 
 
   render() {
-        /**
-         * Recorrer json
-        */
-       const contenido = this.state.Contents.map((Contents, i) => {
-          return (
-            <Container className="my-3" key={Contents.id}>
+    return (
+    /**
+     *@description Compartir metodo de mostrar modal 
+     */
+      <div>
+        <Mapas shareMethods={this.acceptMethods} />
+        <Container className="my-3">
             <Row>
               <Col className="p-0">
                 <Card>
                   <Card.Body className="p-1">
                     <Row className="row no-gutters bg-light position-relative">
                       <Col className="col-sm-6 col-12  mb-md-0 p-md-4">
-                        {this.handleprintContent(Contents.tipo)}
+                        {this.handleprintContent(this.props.tipo)}
                       </Col>
                       <Col className="col-sm-6 position-static p-4 pl-md-0 pb-md-0">
                         <Container>
-                          {this.handlePrintComment(Contents.comentario)}
-                          {this.handleprintAudio(Contents.audio)}
+                          {this.handlePrintComment(this.props.comentario)}
+                          {this.handleprintAudio(this.props.audio)}
                           <Row className="mt-4 ">
                             <Col className="d-flex ">
                               <figure className="icon-info ires">
@@ -122,7 +136,7 @@ class Contenido extends Component {
                                   
                                 />
                                  <small className="text-muted ires">
-                                {Contents.fecha}
+                                {this.props.fecha}
                               </small>
                               </figure>
                              
@@ -136,24 +150,10 @@ class Contenido extends Component {
               </Col>
             </Row>
           </Container>
-          );
-    }).reverse();  
-    return (
-    /**
-     *@description Compartir metodo de mostrar modal 
-     */
-      <div>
-        <Mapas shareMethods={this.acceptMethods} />
-        {contenido}
       </div>
     );
   }
 }
-/**
- *@param {*} menuFilter contiene informacion del filtrado, es recibida desde el componente menu
- */
-Contenido.propTypes = {
-  menuFilter: PropTypes.string
-};
+
 
 export default Contenido;

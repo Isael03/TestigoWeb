@@ -8,6 +8,7 @@
     "google-map-react": "^1.1.4",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
+    "react-cookie": "^4.0.0",
     "react-dom": "^16.8.6",
     "react-h5-audio-player": "^1.2.1",
     "react-redux": "^7.0.3",

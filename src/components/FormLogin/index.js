@@ -50,11 +50,10 @@ class index extends Component {
     var operador = new Operador(this.state.rut, this.state.password);
      var service =new Institucion(this.state.institution);
 
-     //nota: mover a otro sitio e invocarlo aqui
+     //NOTA: mover a otro sitio e invocarlo aqui
 
      return firebase.database().ref("Institucion/"+service.id).ref.once("value").then(snapshot => {
       if((snapshot.child(operador.rut).exists()) && (snapshot.child(operador.rut+"/Contrasena").val()).toString() === operador.contraseña){
-        console.log("Validated");
         this.context.changeValidation(true);
         this.props.onSubmit();
       }else{
@@ -75,7 +74,9 @@ class index extends Component {
     this.setState({
       [name]: value
     });
-    this.context.changeInstitution(value);
+    if(name==="institution"){
+      this.context.changeInstitution(value);
+    }
   }
 
   render() {
