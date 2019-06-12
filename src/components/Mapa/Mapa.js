@@ -43,8 +43,8 @@ class Mapa extends Component {
    */
   static defaultProps = {
     center: {
-      lat: -27.36,
-      lng: -70.33
+      lat: -27.3664,
+      lng: -70.3331
     },
     zoom: 18
   };
@@ -58,7 +58,7 @@ class Mapa extends Component {
           <Modal.Body>
                 <div style={{ height: '80vh', width: '100%' }}>
               <GoogleMapReact
-                bootstrapURLKeys={{ key: 'AIzaSyBQ8AegSeD2_GDC60wxCzMDd8WeCeGicrU' }}
+                bootstrapURLKeys={{ key: 'AIzaSyBzM2Wvl5NcJZ2Xz8nmGlp6Ij7dD4KbGF4' }}
                 defaultCenter={this.props.center}
                 defaultZoom={this.props.zoom}
               >
