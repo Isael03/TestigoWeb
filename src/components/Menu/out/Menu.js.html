@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Menu.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Menu.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from "react";
+import Contenido from "../Contenido/Contenido";
+import {
+  Navbar,
+  Dropdown,
+  Container,
+  Nav,
+  Badge,
+  Image
+} from "react-bootstrap";
+import Filtro from "./Image/filter-icon.png";
+import imgLogout from "./Image/logout.png";
+import AppContext from "../AppContext";
+import firebase from "firebase/app";
+import Cookies from 'universal-cookie'
+/**
+ *@description Este componente sirve para mostrar el contenido que se encuentra en la BD
+ */
+class menu extends Component {
+  static contextType = AppContext;
+  
+  /**
+   * @constructor
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      filter: "all",
+      filesdb: []
+    };
+    this.Logout = this.Logout.bind(this);
+    this.watchAll = this.watchAll.bind(this);
+    this.watchVideos = this.watchVideos.bind(this);
+    this.watchImages = this.watchImages.bind(this);
+    this.handleChangeView = this.handleChangeView.bind(this);
+  }
+  /**
+   * @description Metodo que se inicia cuando el componente se monta. Recoje los datos de la bd y los traspasa al estado filesdb
+   */
+  componentDidMount() {
+    var list = [];
+    const refArchivos = firebase.database().ref("/Archivos/");
+    refArchivos.on("value", snapshot => {
+      list = snapshot.val();
+      this.setState({
+        filesdb: list
+      });
+    });
+  }
+
+  /**
+   * @description Metodo que se ejecuta al cerrar el componente. Este cierra la conexion con la bd y deja de actualizar el estado.
+   */
+  componentWillUnmount(){
+     var list = [];
+    const refArchivos = firebase.database().ref("/Archivos/");
+    refArchivos.off("value", snapshot => {
+      list = snapshot.val();
+      this.setState({
+        filesdb: list
+      });
+    }); 
+  }
+
+  /**
+   * @description Desloguearse, invoca el metodo desde el componente Dashboard
+   */
+  Logout() {
+    this.props.logout();
+  }
+  /**
+   * @description wacthAll cambia el estado del filtro a "all"
+   */
+  watchAll() {
+    this.setState({
+      filter: "all"
+    });
+  }
+  /**
+   *@description wacthVideos cambia el estado del filtro a "only-videos"
+   */
+  watchVideos() {
+    this.setState({
+      filter: "only-videos"
+    });
+  }
+  /**
+   *@description wacthImages cambia el estado del filtro a "only-images"
+   */
+  watchImages() {
+    this.setState({
+      filter: "only-images"
+    });
+  }
+  /**
+   * @description handleChangeView cambia el contenido de la pantalla dependediendo del estado del filter
+   * @param {string} filter - proviene de this.state.filter
+   */
+  handleChangeView(filter) {
+    
+    var cookies = new Cookies();
+    cookies.get('institution'); 
+    var View;
+    //Videos e imagenes
+    if (filter === "all") {
+      View = this.state.filesdb.map((filesdb, i) => {
+          return &lt;Contenido tipo={filesdb.Tipo} fecha={filesdb.Fecha} key={i} comentario={filesdb.Comentario} audio={filesdb.Audio} archivo={filesdb.Archivo} />;     
+      }).reverse();
+    }
+    //Para videos
+    if (filter === "only-videos") {
+      View = this.state.filesdb.map((filesdb, i) => { 
+        if(filesdb.Tipo==="Video"){
+          return &lt;Contenido tipo={filesdb.Tipo} fecha={filesdb.Fecha} key={i} comentario={filesdb.Comentario} audio={filesdb.Audio} archivo={filesdb.Archivo} />;}         
+      }).reverse();
+    }
+    //Para imagenes
+    if (filter === "only-images") {
+      View = this.state.filesdb.map((filesdb, i) => {
+        if(filesdb.Tipo==="Imagen"){
+          return &lt;Contenido tipo={filesdb.Tipo} fecha={filesdb.Fecha} key={i} comentario={filesdb.Comentario} audio={filesdb.Audio} archivo={filesdb.Archivo} />;}         
+      }).reverse();
+    }
+    return View;
+  }
+
+  render() {
+    this.context.Validated();
+    document.body.style.backgroundColor = "white";
+    return (
+      &lt;Container id="home" fluid className="p-0">
+        &lt;Navbar
+          collapseOnSelect
+          expand="lg"
+          bg="light"
+          variant="dark"
+          className="border-bottom border-danger d-flex"
+        >
+          &lt;Navbar.Brand href="#home">
+            &lt;h3 text="light">
+              &lt;Badge variant="secondary" className="px-5 badge badge-secondary">
+                Testigo
+              &lt;/Badge>
+            &lt;/h3>
+          &lt;/Navbar.Brand>
+          &lt;Nav className="d-flex justify-content-end" position="relative">
+            &lt;Nav.Link className="pos">
+              &lt;figure>
+                &lt;Image
+                  src={imgLogout}
+                  width="20"
+                  height="20"
+                  className="img-fluid"
+                  onClick={this.Logout}
+                />
+              &lt;/figure>
+            &lt;/Nav.Link>
+          &lt;/Nav>
+        &lt;/Navbar>
+        &lt;Container>
+          &lt;Dropdown className="my-3  text-right">
+            &lt;Dropdown.Toggle variant="danger" id="dropdown-basic">
+              &lt;Image
+                src={Filtro}
+                width="16"
+                height="16"
+                className="mr-1 img-fluid"
+                alt="Responsive image"
+              />
+              Filtrar
+            &lt;/Dropdown.Toggle>
+            &lt;Dropdown.Menu>
+              &lt;Dropdown.Item onClick={this.watchAll}>Todo&lt;/Dropdown.Item>
+              &lt;Dropdown.Item onClick={this.watchVideos}>Videos&lt;/Dropdown.Item>
+              &lt;Dropdown.Item onClick={this.watchImages}>Imagenes&lt;/Dropdown.Item>
+            &lt;/Dropdown.Menu>
+          &lt;/Dropdown>
+        &lt;/Container>
+        {this.handleChangeView(this.state.filter)}
+      &lt;/Container>
+    );
+  }
+}
+
+export default menu;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="menu.html">menu</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Thu Jun 13 2019 23:41:31 GMT-0400 (GMT-04:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
