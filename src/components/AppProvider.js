@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import AppContext from "./AppContext";
 import { withRouter } from "react-router-dom";
 import Cookies from "universal-cookie";
-import firebase from "firebase/app";
 
 class AppProvider extends Component {
   constructor(props) {

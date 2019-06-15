@@ -12,13 +12,13 @@ import Filtro from "./Image/filter-icon.png";
 import imgLogout from "./Image/logout.png";
 import AppContext from "../AppContext";
 import firebase from "firebase/app";
-import Cookies from 'universal-cookie'
+import Cookies from "universal-cookie";
 /**
  *@description Este componente sirve para mostrar el contenido que se encuentra en la BD
  */
 class menu extends Component {
   static contextType = AppContext;
-  
+
   /**
    * @constructor
    */
@@ -38,29 +38,30 @@ class menu extends Component {
   /**
    * @description Metodo que se inicia cuando el componente se monta. Recoje los datos de la bd y los traspasa al estado filesdb
    */
-  componentDidMount() {
-    var list = [];
-    const refArchivos = firebase.database().ref("/Archivos/");
-    refArchivos.on("value", snapshot => {
-      list = snapshot.val();
-      this.setState({
-        filesdb: list
-      });
-    });
+  componentDidMount() {    
+    try {
+      var list=[];
+      var cookies = new Cookies();
+      const refArchivos = firebase.database().ref("/Archivos/");
+      refArchivos.orderByChild("Institucion/" + cookies.get("institution"))
+        .equalTo(true).on("value", snapshot => {
+          list = (snapshot.val()  !== null) ? Object.values(snapshot.val()) : snapshot.val();                          
+          console.log(list);
+          this.setState({
+            filesdb: list 
+          });         
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /**
    * @description Metodo que se ejecuta al cerrar el componente. Este cierra la conexion con la bd y deja de actualizar el estado.
    */
-  componentWillUnmount(){
-     var list = [];
-    const refArchivos = firebase.database().ref("/Archivos/");
-    refArchivos.off("value", snapshot => {
-      list = snapshot.val();
-      this.setState({
-        filesdb: list
-      });
-    }); 
+  componentWillUnmount() {
+      const refArchivos = firebase.database().ref("/Archivos/");
+      refArchivos.off();
   }
 
   /**
@@ -99,8 +100,8 @@ class menu extends Component {
    * @return {string}
    */
   getFileExtension(filename) {
-    var extension = filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
-    var type = extension === "mp4"? "Video": "Imagen";
+    var extension = filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
+    var type = extension === "mp4" ? "Video" : "Imagen";
     return type;
   }
   /**
@@ -108,31 +109,67 @@ class menu extends Component {
    * @param {string} filter - proviene de this.state.filter
    */
   handleChangeView(filter) {
+    if(this.state.filesdb !== null){
+      try {
+        var View;
+        //Videos e imagenes
+        if (filter === "all") {
+          View = this.state.filesdb.map((filesdb, i) => {
+              return (
+                <Contenido
+                  tipo={filesdb.Tipo}
+                  fecha={filesdb.Fecha}
+                  key={i}
+                  comentario={filesdb.Comentario}
+                  audio={filesdb.Audio}
+                  archivo={filesdb.Archivo}
+                />
+              );
+            })
+            .reverse();
+        }
+        //Para videos
+        if (filter === "only-videos") {
+          View = this.state.filesdb
+            .map((filesdb, i) => {
+              if (this.getFileExtension(filesdb.Archivo) === "Video") {
+                return (
+                  <Contenido
+                    fecha={filesdb.Fecha}
+                    key={i}
+                    comentario={filesdb.Comentario}
+                    audio={filesdb.Audio}
+                    archivo={filesdb.Archivo}
+                  />
+                );
+              }
+            })
+            .reverse();
+        }
+        //Para imagenes
+        if (filter === "only-images") {
+          View = this.state.filesdb
+            .map((filesdb, i) => {
+              if (this.getFileExtension(filesdb.Archivo) === "Imagen") {
+                return (
+                  <Contenido
+                    fecha={filesdb.Fecha}
+                    key={i}
+                    comentario={filesdb.Comentario}
+                    audio={filesdb.Audio}
+                    archivo={filesdb.Archivo}
+                  />
+                );
+              }
+            })
+            .reverse();
+        }
+        return View;
+      } catch (error) {
+        console.log(error);
+      }
+    }
     
-    var cookies = new Cookies();
-    cookies.get('institution'); 
-    var View;
-    //Videos e imagenes
-    if (filter === "all") {
-      View = this.state.filesdb.map((filesdb, i) => {
-          return <Contenido  fecha={filesdb.Fecha} key={i} comentario={filesdb.Comentario} audio={filesdb.Audio} archivo={filesdb.Archivo} />;     
-      }).reverse();
-    }
-    //Para videos
-    if (filter === "only-videos") {
-      View = this.state.filesdb.map((filesdb, i) => { 
-        if(this.getFileExtension(filesdb.Archivo)==="Video"){
-          return <Contenido  fecha={filesdb.Fecha} key={i} comentario={filesdb.Comentario} audio={filesdb.Audio} archivo={filesdb.Archivo} />;}         
-      }).reverse();
-    }
-    //Para imagenes
-    if (filter === "only-images") {
-      View = this.state.filesdb.map((filesdb, i) => {
-        if(this.getFileExtension(filesdb.Archivo)==="Imagen"){
-          return <Contenido  fecha={filesdb.Fecha} key={i} comentario={filesdb.Comentario} audio={filesdb.Audio} archivo={filesdb.Archivo} />;}         
-      }).reverse();
-    }
-    return View;
   }
 
   render() {
