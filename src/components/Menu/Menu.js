@@ -117,7 +117,6 @@ class menu extends Component {
           View = this.state.filesdb.map((filesdb, i) => {
               return (
                 <Contenido
-                  tipo={filesdb.Tipo}
                   fecha={filesdb.Fecha}
                   key={i}
                   comentario={filesdb.Comentario}

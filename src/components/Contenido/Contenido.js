@@ -38,10 +38,10 @@ class Contenido extends Component {
   /** 
    *@description  Recupera la extension de los archivo e imprime las imagenes o videos en los contenedores que le correspondan
    */
-  handleprintContent(type) {
-    /* var extension = filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+  handleprintContent(filename) {
+     var extension = filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
     var type = extension === "mp4" ? "Video": "Imagen";
-    console.log(type); */
+    console.log(type); 
     var typeContent;
     typeContent = type === "Video" ? <VideoViewer /> : <ImageViewer />;
     return typeContent;
@@ -76,7 +76,7 @@ class Contenido extends Component {
                   <Card.Body className="p-1">
                     <Row className="row no-gutters bg-light position-relative">
                       <Col className="col-sm-6 col-12  mb-md-0 p-md-4">
-                        {this.handleprintContent(this.props.tipo)}
+                        {this.handleprintContent(this.props.archivo)}
                       </Col>
                       <Col className="col-sm-6 position-static p-4 pl-md-0 pb-md-0">
                         <Container>
