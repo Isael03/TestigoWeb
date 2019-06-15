@@ -45,7 +45,7 @@ class menu extends Component {
       const refArchivos = firebase.database().ref("/Archivos/");
       refArchivos.orderByChild("Institucion/" + cookies.get("institution"))
         .equalTo(true).on("value", snapshot => {
-          list = (snapshot.val()  !== null) ? Object.values(snapshot.val()) : snapshot.val();                          
+          list = (snapshot.val()  !== null) ? Object.values(snapshot.val()) : snapshot.val();                       
           console.log(list);
           this.setState({
             filesdb: list 
