@@ -6,50 +6,57 @@ import GoogleMapReact from 'google-map-react';
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 /**
- * Este componente despliega un modal que contiene al mapa 
+ * @description Este componente despliega un modal que contiene al mapa 
  */
 class Mapa extends Component {
+
   constructor(props, context) {
     super(props, context);
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    //const {latitud , longitud} = this.props;
+    this.latitud= this.props.latitud; 
+    this.longitud= this.props.longitud;  
+    
 
     this.state = {
       show: false,
     };
   }
   /**
-   * Pasar Metodo al componente contenido 
+   *@description Pasar Metodo al componente contenido 
    */
    componentDidMount() { 
     this.props.shareMethods(this.handleShow.bind(this))
   } 
   /**
-   * Cerrar modal 
+   *@description Cerrar modal 
    */
   handleClose() {
     this.setState({ show: false });
   }
   /**
-  Abrir modal 
+  *@descriptionAbrir modal 
   */
   handleShow() {
     this.setState({ show: true });
   }
-
-  /**
-   * Establecer coordenadas del mapa
-   */
-  static defaultProps = {
+/*   lat: -27.3664,
+  lng: -70.3331 */
+/*   lat: this.latitud,
+      lng: this.longitud  */
+   /* Establecer coordenadas del mapa*/
+    static defaultProps = {
     center: {
-      lat: -27.3664,
-      lng: -70.3331
+      lat:this.latitud,
+      lng:this.longitud
     },
     zoom: 18
-  };
+  }; 
 //------------------------
   render() {
+    console.log(this.latitud, this.longitud );
     return (
 
         <Modal show={this.state.show} onHide={this.handleClose} size="xl">
@@ -79,5 +86,6 @@ class Mapa extends Component {
     );
   }
 }
+
 
 export default Mapa;

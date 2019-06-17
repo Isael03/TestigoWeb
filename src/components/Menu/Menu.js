@@ -38,18 +38,22 @@ class menu extends Component {
   /**
    * @description Metodo que se inicia cuando el componente se monta. Recoje los datos de la bd y los traspasa al estado filesdb
    */
-  componentDidMount() {    
+  componentDidMount() {
     try {
-      var list=[];
+      var list = [];
       var cookies = new Cookies();
       const refArchivos = firebase.database().ref("/Archivos/");
-      refArchivos.orderByChild("Institucion/" + cookies.get("institution"))
-        .equalTo(true).on("value", snapshot => {
-          list = (snapshot.val()  !== null) ? Object.values(snapshot.val()) : snapshot.val();                       
-          console.log(list);
+      refArchivos
+        .orderByChild("Institucion/" + cookies.get("institution"))
+        .equalTo(true)
+        .on("value", snapshot => {
+          list =
+            snapshot.val() !== null
+              ? Object.values(snapshot.val())
+              : snapshot.val();
           this.setState({
-            filesdb: list 
-          });         
+            filesdb: list
+          });
         });
     } catch (error) {
       console.log(error);
@@ -60,8 +64,8 @@ class menu extends Component {
    * @description Metodo que se ejecuta al cerrar el componente. Este cierra la conexion con la bd y deja de actualizar el estado.
    */
   componentWillUnmount() {
-      const refArchivos = firebase.database().ref("/Archivos/");
-      refArchivos.off();
+    const refArchivos = firebase.database().ref("/Archivos/");
+    refArchivos.off();
   }
 
   /**
@@ -101,29 +105,51 @@ class menu extends Component {
    */
   getFileExtension(filename) {
     var extension = filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
-    var type = extension === "mp4" ? "Video" : "Imagen";
+    const video_extension = ["mp4", "3gp", "3gpp" , "3gpp2" , "mpeg", "mov"]; //webm mpg avi mkv m4v 
+    const image_extension = ["jpg", "png","jpeg"];
+    var type = "";
+    for (var i = 0; i < video_extension.length; i++) {
+      if (video_extension[i] === extension) {
+        type = "Video";
+        break;
+      }
+    }
+    if (type === "") {
+      for (var j = 0; j < image_extension.length; j++) {
+        if (image_extension[j] === extension) {
+          type = "Imagen";
+          break;
+        }
+      }
+    }
     return type;
   }
   /**
    * @description handleChangeView cambia el contenido de la pantalla dependediendo del estado del filter
    * @param {string} filter - proviene de this.state.filter
+   * @return {Array}
    */
   handleChangeView(filter) {
-    if(this.state.filesdb !== null){
+    if (this.state.filesdb !== null) {
       try {
         var View;
         //Videos e imagenes
         if (filter === "all") {
-          View = this.state.filesdb.map((filesdb, i) => {
-              return (
+          View = this.state.filesdb
+            .map((filesdb, i) => {
+             // console.log(filesdb.Ubicacion.Longitud)
+              return (                
                 <Contenido
                   fecha={filesdb.Fecha}
                   key={i}
                   comentario={filesdb.Comentario}
                   audio={filesdb.Audio}
                   archivo={filesdb.Archivo}
+                  filtrar={this.getFileExtension}
+                  latitud={filesdb.Ubicacion.Latitud}
+                  longitud={filesdb.Ubicacion.Longitud}
                 />
-              );
+            );
             })
             .reverse();
         }
@@ -139,6 +165,9 @@ class menu extends Component {
                     comentario={filesdb.Comentario}
                     audio={filesdb.Audio}
                     archivo={filesdb.Archivo}
+                    filtrar={this.getFileExtension}
+                    latitud={filesdb.Ubicacion.Latitud}
+                    longitud={filesdb.Ubicacion.Longitud}
                   />
                 );
               }
@@ -157,6 +186,9 @@ class menu extends Component {
                     comentario={filesdb.Comentario}
                     audio={filesdb.Audio}
                     archivo={filesdb.Archivo}
+                    filtrar={this.getFileExtension}
+                    latitud={filesdb.Ubicacion.Latitud}
+                    longitud={filesdb.Ubicacion.Longitud}
                   />
                 );
               }
@@ -168,7 +200,6 @@ class menu extends Component {
         console.log(error);
       }
     }
-    
   }
 
   render() {

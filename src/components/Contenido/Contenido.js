@@ -19,6 +19,7 @@ class Contenido extends Component {
     this.handleprintContent = this.handleprintContent.bind(this);
     this.handleprintAudio=this.handleprintAudio.bind(this);
     this.handlePrintComment=this.handlePrintComment.bind(this);
+    this.containerFiles=this.props.filtrar;
   }
 
   /**
@@ -36,14 +37,13 @@ class Contenido extends Component {
   };
 
   /** 
-   *@description  Recupera la extension de los archivo e imprime las imagenes o videos en los contenedores que le correspondan
+   *@description  Recupera la extension de los archivo, a traves del metodo recibido como propiedad de Menu e imprime las imagenes o videos en los contenedores que le correspondan
+   *@param {string} filename - Corresponde a la ruta del archivo
+   * @return {*}
    */
   handleprintContent(filename) {
-     var extension = filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
-    var type = extension === "mp4" ? "Video": "Imagen";
-    console.log(type); 
     var typeContent;
-    typeContent = type === "Video" ? <VideoViewer /> : <ImageViewer />;
+    typeContent = this.containerFiles(filename) === "Video" ? <VideoViewer /> : <ImageViewer />;
     return typeContent;
   }
   /**
@@ -63,12 +63,13 @@ class Contenido extends Component {
 
 
   render() {
+   // console.log(this.props.latitud)
     return (
     /**
      *@description Compartir metodo de mostrar modal 
      */
       <div>
-        <Mapas shareMethods={this.acceptMethods} />
+        <Mapas shareMethods={this.acceptMethods} latitud={this.props.latitud} longitud={this.props.longitud}/>
         <Container className="my-3">
             <Row>
               <Col className="p-0">
