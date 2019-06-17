@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Button,Modal} from 'react-bootstrap';
-//import { Map, GoogleApiWrapper, InfoWindow, Marker} from 'google-maps-react';
-import GoogleMapReact from 'google-map-react';
+import { Map, GoogleApiWrapper, InfoWindow, Marker} from 'google-maps-react';
+//import GoogleMapReact from 'google-map-react';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -57,17 +57,24 @@ class Mapa extends Component {
           </Modal.Header>
           <Modal.Body>
                 <div style={{ height: '80vh', width: '100%' }}>
-              <GoogleMapReact
-                bootstrapURLKeys={{ key: 'AIzaSyBzM2Wvl5NcJZ2Xz8nmGlp6Ij7dD4KbGF4' }}
-                defaultCenter={this.props.center}
-                defaultZoom={this.props.zoom}
-              >
-                <AnyReactComponent
-                  lat={-27.3664}
-                  lng={-70.3331}
-                  text="My Marker"
-                />
-              </GoogleMapReact>
+              <Map
+                  google={this.props.google}
+                  style={{width: '97%', height: '100%', position: 'center'}}
+                  className={'map'}
+                  center={{
+                    lat: -27.3664,
+                    lng: -70.3331
+                  }}
+                  zoom={18}
+                  onClick={this.onMapClicked}
+                  position={{lat: -27.3664, lng: -70.3331}}
+                  
+                ><Marker
+                    title={'The marker`s title will appear as a tooltip.'}
+                    name={'COPI'}
+                    position={{lat: -27.3664, lng: -70.3331}} 
+                    />
+              </Map>
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -80,4 +87,6 @@ class Mapa extends Component {
   }
 }
 
-export default Mapa;
+export default GoogleApiWrapper({
+  apiKey: ('AIzaSyBzM2Wvl5NcJZ2Xz8nmGlp6Ij7dD4KbGF4')
+})(Mapa)
