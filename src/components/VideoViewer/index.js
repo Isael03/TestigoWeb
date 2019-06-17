@@ -10,7 +10,7 @@ class index extends Component {
             <div>
                 <Player
                 playsInline
-                src='/Videos/trailer_hd.mp4'
+                src={this.props.ruta}
                 fluid={false}
                 className="w-100"
                 width={480}

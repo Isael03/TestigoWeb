@@ -40,7 +40,6 @@ class Mapa extends Component {
  
   //------------------------
   render() {
-    console.log(this.latitud, this.longitud);
     return (
       <Modal show={this.state.show} onHide={this.handleClose} size="xl">
         <Modal.Header closeButton />
@@ -48,7 +47,7 @@ class Mapa extends Component {
           <div style={{ height: "80vh", width: "100%" }}>
             <Map
               google={this.props.google}
-              style={{ width: "97%", height: "95%", position: "center" }}
+              style={{ width: "95%", height: "95%", position: "center" }}
               className={"map"}
               initialCenter={{ lat:this.latitud, lng: this.longitud}}
               zoom={18}

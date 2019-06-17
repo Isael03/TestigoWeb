@@ -43,7 +43,7 @@ class Contenido extends Component {
    */
   handleprintContent(filename) {
     var typeContent;
-    typeContent = this.containerFiles(filename) === "Video" ? <VideoViewer /> : <ImageViewer />;
+    typeContent = this.containerFiles(filename) === "Video" ? <VideoViewer ruta={filename}/> : <ImageViewer ruta={filename} />;
     return typeContent;
   }
   /**

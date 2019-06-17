@@ -33,7 +33,7 @@ class index extends Component {
       <div>
         <figure>
           <Image
-            src="/Image/pelea.jpeg"
+            src={this.props.ruta}
             className="w-100"
             alt="Responsive image"
             onClick={this.handleShow}
@@ -41,7 +41,7 @@ class index extends Component {
         </figure>
           <Modal show={this.state.show} onHide={this.handleClose} size="xl" className="d-flex align-items-center">   
               <Image
-                src="/Image/pelea.jpeg"
+                src={this.props.ruta}
                 className="w-100 h-auto"
                 alt="Responsive image"
                 onClick={this.handleClose}

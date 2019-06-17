@@ -14,7 +14,7 @@ import Operador from "../../ObjectConfig/Operador";
 import Institucion from "../../ObjectConfig/Institucion";
 import AppContext from '../AppContext'
 import firebase from "firebase/app";
-import database from '../../ObjectConfig/Firebase/RealtimeDatabase'
+import database from '../../ObjectConfig/Firebase/Firebase'
 
 /**
  * @class Formulario de login e interaccion

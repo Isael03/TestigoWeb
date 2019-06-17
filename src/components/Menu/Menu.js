@@ -34,6 +34,7 @@ class menu extends Component {
     this.watchImages = this.watchImages.bind(this);
     this.handleChangeView = this.handleChangeView.bind(this);
     this.getFileExtension = this.getFileExtension.bind(this);
+    this.getFile = this.getFile.bind(this);
   }
   /**
    * @description Metodo que se inicia cuando el componente se monta. Recoje los datos de la bd y los traspasa al estado filesdb
@@ -109,14 +110,14 @@ class menu extends Component {
     const image_extension = ["jpg", "png","jpeg"];
     var type = "";
     for (var i = 0; i < video_extension.length; i++) {
-      if (video_extension[i] === extension) {
+      if (video_extension[i].toLowerCase() === extension) {
         type = "Video";
         break;
       }
     }
     if (type === "") {
       for (var j = 0; j < image_extension.length; j++) {
-        if (image_extension[j] === extension) {
+        if (image_extension[j].toLowerCase() === extension) {
           type = "Imagen";
           break;
         }
@@ -124,6 +125,24 @@ class menu extends Component {
     }
     return type;
   }
+  getFile(pathFile){
+    var storage = firebase.storage().ref();
+    storage.child(pathFile).getDownloadURL().then(function(url) {    
+      // This can be downloaded directly:
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function(event) {
+        var blob = xhr.response;
+      };
+      xhr.open('GET', url);
+     // xhr.send();
+      console.log(url);
+      return url;
+    }).catch(function(error) {
+      // Handle any errors
+    });
+  }
+  
   /**
    * @description handleChangeView cambia el contenido de la pantalla dependediendo del estado del filter
    * @param {string} filter - proviene de this.state.filter
@@ -131,20 +150,35 @@ class menu extends Component {
    */
   handleChangeView(filter) {
     if (this.state.filesdb !== null) {
+   /*    var storage = firebase.storage().ref();
+      storage.child("Videos/trailer_hd.mp4").getDownloadURL().then(function(url) {    
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = function(event) {
+          var blob = xhr.response;
+        };
+        xhr.open('GET', url);
+       // xhr.send();
+        console.log(url);
+        return url;
+      }).catch(function(error) { }); */
+
       try {
         var View;
         //Videos e imagenes
         if (filter === "all") {
           View = this.state.filesdb
             .map((filesdb, i) => {
-             // console.log(filesdb.Ubicacion.Longitud)
               return (                
                 <Contenido
                   fecha={filesdb.Fecha}
                   key={i}
                   comentario={filesdb.Comentario}
                   audio={filesdb.Audio}
+                  //archivo={this.getFile(filesdb.Archivo)}
                   archivo={filesdb.Archivo}
+                  //tipo={filesdb.Tipo}
                   filtrar={this.getFileExtension}
                   latitud={filesdb.Ubicacion.Latitud}
                   longitud={filesdb.Ubicacion.Longitud}
@@ -165,6 +199,7 @@ class menu extends Component {
                     comentario={filesdb.Comentario}
                     audio={filesdb.Audio}
                     archivo={filesdb.Archivo}
+                    //tipo={filesdb.Tipo}
                     filtrar={this.getFileExtension}
                     latitud={filesdb.Ubicacion.Latitud}
                     longitud={filesdb.Ubicacion.Longitud}
@@ -186,6 +221,7 @@ class menu extends Component {
                     comentario={filesdb.Comentario}
                     audio={filesdb.Audio}
                     archivo={filesdb.Archivo}
+                    //tipo={filesdb.Tipo}
                     filtrar={this.getFileExtension}
                     latitud={filesdb.Ubicacion.Latitud}
                     longitud={filesdb.Ubicacion.Longitud}
