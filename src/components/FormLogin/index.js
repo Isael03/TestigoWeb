@@ -9,7 +9,6 @@ import {
   Alert,
   Collapse
 } from "react-bootstrap";
-//import db from "../../ObjectConfig/Firebase/FirestoreConfig";
 import Operador from "../../ObjectConfig/Operador";
 import Institucion from "../../ObjectConfig/Institucion";
 import AppContext from '../AppContext'

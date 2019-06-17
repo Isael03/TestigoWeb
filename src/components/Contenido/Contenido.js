@@ -6,7 +6,7 @@ import Audio from '../AudioPlayer';
 import { Card, Container, Row, Col, Image } from "react-bootstrap";
 import IconoMapa from "./Image/854878.png";
 import Imagen2 from "./Image/icono-calendario.png";
-
+import firebase from "firebase/app";
 /**
 * @description Este componente incorpora a otros componentes para mostrarlos adecuadamente en su interior
 */
@@ -20,6 +20,7 @@ class Contenido extends Component {
     this.handleprintAudio=this.handleprintAudio.bind(this);
     this.handlePrintComment=this.handlePrintComment.bind(this);
     this.containerFiles=this.props.filtrar;
+    this.getFile = this.getFile.bind(this);
   }
 
   /**
@@ -43,14 +44,36 @@ class Contenido extends Component {
    */
   handleprintContent(filename) {
     var typeContent;
-    typeContent = this.containerFiles(filename) === "Video" ? <VideoViewer ruta={filename}/> : <ImageViewer ruta={filename} />;
+    typeContent = this.containerFiles(filename) === "Video" ? <VideoViewer ruta={filename} /*ruta={this.getFile(filename)}*//> : <ImageViewer ruta={filename} /*ruta={this.getFile(filename)}*//>;
     return typeContent;
+  }
+ /**
+   * @description Obtiene la url del archivo desde el Storage de firebase
+   * @param {string} pathFile - Ruta del archivo
+   * @return {string} 
+   */
+  getFile(pathFile){
+    var storage = firebase.storage().ref();
+    storage.child(pathFile).getDownloadURL().then(function(url) {    
+      // This can be downloaded directly:
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function(event) {
+        var blob = xhr.response;
+      };
+      xhr.open('GET', url);
+     // xhr.send();
+      console.log(url);
+      return url;
+    }).catch(function(error) {
+      // Handle any errors
+    });
   }
   /**
    *@description Comprueba que exista una ruta para el audio
    */
   handleprintAudio(Is_there_audio){
-    var audio = Is_there_audio !== "" ? <Audio ruta={Is_there_audio}/> : <h2 className="text-center">No hay grabacion disponible</h2>     
+    var audio = Is_there_audio !== "" ? <Audio ruta={Is_there_audio} /*ruta={this.getFile(filename)}*//> : <h2 className="text-center">No hay grabacion disponible</h2>     
     return audio;
   }
   /**
