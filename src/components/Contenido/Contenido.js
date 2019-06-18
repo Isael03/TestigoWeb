@@ -3,7 +3,7 @@ import Mapas from "../Mapa/Mapa";
 import ImageViewer from "../ImageViewer";
 import VideoViewer from "../VideoViewer";
 import Audio from '../AudioPlayer';
-import { Card, Container, Row, Col, Image } from "react-bootstrap";
+import { Card, Container, Row, Col, Image, Figure } from "react-bootstrap";
 import IconoMapa from "./Image/854878.png";
 import Imagen2 from "./Image/icono-calendario.png";
 /**
@@ -77,7 +77,7 @@ class Contenido extends Component {
                   <Card.Body className="p-1">
                     <Row className="row no-gutters bg-light position-relative">
                       <Col className="col-sm-6 col-12  mb-md-0 p-md-4">
-                        {this.handleprintContent(this.props.archivo)}
+                      {this.handleprintContent(this.props.archivo)}
                       </Col>
                       <Col className="col-sm-6 position-static p-4 pl-md-0 pb-md-0">
                         <Container>

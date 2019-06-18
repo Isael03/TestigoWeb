@@ -11,11 +11,10 @@ class index extends Component {
         return (
             <div>
                 <Player
-                id="video"
                 playsInline
                 src={this.props.ruta}
                 fluid={false}
-                className="w-100"
+                className="d-block w-100"
                 width={480}
                 height={260}
                 >                   
