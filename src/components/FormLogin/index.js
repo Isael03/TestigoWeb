@@ -22,8 +22,6 @@ class index extends Component {
   static contextType = AppContext;
   /**
    * @constructor 
-   * @property {*} props - Para usar las propiedades
-   * @property {*} context - Para usar el contexto
    */
   constructor(props, context) {
     super(props, context);
@@ -39,7 +37,7 @@ class index extends Component {
     this.onSubmit=this.props.onSubmit;
   }
   /**
-   * @fuction Invocar el metodo para recoger datos e iniciar sesion
+   * @description Invocar el metodo para recoger datos e iniciar sesion
    * @property {*} - Indica el evento en el que se encuentra
    * @property {boolean} open - variable open que aparece en el render y se usa para cambiar el estado de this.open
    */
@@ -49,11 +47,8 @@ class index extends Component {
     var operador = new Operador(this.state.rut, this.state.password);
      var service =new Institucion(this.state.institution);
 
-     //NOTA: mover a otro sitio e invocarlo aqui
-
-     return firebase.database().ref("Institucion/"+service.id).ref.once("value").then(snapshot => {
+     firebase.database().ref("Institucion/"+service.id).ref.once("value").then(snapshot => {
       if((snapshot.child(operador.rut).exists()) && (snapshot.child(operador.rut+"/Contrasena").val()).toString() === operador.contraseña){
-        this.context.changeValidation(true);
         this.props.onSubmit();
       }else{
         this.setState({ open: !open });
@@ -65,7 +60,7 @@ class index extends Component {
   }
   
   /**
-   *@fuction Captar lo escrito en los inputs
+   *@description Captar lo escrito en los inputs
    *@property {*} e - evento que se desarrolla 
    */
   handleInputChange(e) {

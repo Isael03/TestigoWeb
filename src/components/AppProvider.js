@@ -3,19 +3,21 @@ import AppContext from "./AppContext";
 import { withRouter } from "react-router-dom";
 import Cookies from "universal-cookie";
 
+/**
+ * @description Componente utilizado para establecer controlar otros estados y metodos, y traspasarlos a los componentes hijos
+ */
 class AppProvider extends Component {
+  /**
+   * @constructor
+   */
   constructor(props) {
     super(props);
     this.state = {
       institution: null,
-      validation: false,
-      user:false,
-      data:[]
+      user:false
     };
     this.changeInstitution = this.changeInstitution.bind(this);
-    this.handleChangeValidation.bind(this);
     this.destroySession = this.destroySession.bind(this);
-    this.handleChangeValidation = this.handleChangeValidation.bind(this);
     this.Validated = this.Validated.bind(this);
     this.ChangeState = this.ChangeState.bind(this);
   }
@@ -31,10 +33,9 @@ class AppProvider extends Component {
     });
     var cookies = new Cookies();
     cookies.set("institution", nameService, { path: "/" });
-     //console.log(cookies.get('institution')); 
   }
   /**
-   * @description Metodo que actualiza los estado de manera no especifica, por lo que cualquier estado podria actualizarce usando este metodo. Ademas que genera una cokkie con el rut del usuario
+   * @description Metodo que actualiza los estados de manera no especifica, por lo que cualquier estado podria actualizarce usando este metodo. Ademas que genera una cokkie con el rut del usuario
    * @param {string} name - Recibe el nombre que hace referencia la estado
    * @param {string} value - Valor por cual se actualizara el estado 
    */
@@ -44,29 +45,20 @@ class AppProvider extends Component {
     });
     if(name==="rut"){
       var cookies = new Cookies();
-      cookies.set("rut", value, { path: "/" });
+      cookies.set("rut", value, { path: "/" }); 
       this.setState({
         user:true
-      })
+      })     
     }    
   }
+ 
   /**
-   * @description Metodo que cambia el estado de validation, para saber si eun usuario esta logueado. False no lo esta y al contrario si es true.
-   * @param {boolean} boolean - Variable que puede ser true o false
-   */
-  handleChangeValidation(boolean) {
-    this.setState({
-      validation: boolean
-    });
-    console.log("login " + this.state.validation);
-  }
-
-  /**
-   * @description Metodo que compara el estado de validation. Si el estado de validation es falso, devuelve al usuario al login
+   * @description Metodo que compara si la cookie de la institucion existe o no. Si no existe devuelve al usuario al login
    */
   Validated() {
     var cookies = new Cookies();
-    if ((this.state.validation === false) && (cookies.get('rut') === null)) {
+    cookies.get()
+    if ((cookies.get("institution") === undefined)) {
       return this.props.history.push("/");
     }
   }
@@ -77,8 +69,6 @@ class AppProvider extends Component {
   destroySession() {
     this.setState({
       institution: null,
-      validation: false,
-      user:false
     });
     var cookies = new Cookies();
     cookies.remove('institution');
@@ -90,7 +80,6 @@ class AppProvider extends Component {
         value={{
           state: this.state,
           changeInstitution: this.changeInstitution,
-          changeValidation: this.handleChangeValidation,
           destroySession: this.destroySession,
           Validated: this.Validated,
           ChangeState:this.ChangeState

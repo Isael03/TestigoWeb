@@ -61,7 +61,7 @@ class menu extends Component {
   }
 
   /**
-   * @description Metodo que se ejecuta al cerrar el componente. Este cierra la conexion con la bd y deja de actualizar el estado.
+   * @description Metodo que se ejecuta al cerrar el componente. Este cierra la conexion con la bd y deja de actualizar el estado filesdb
    */
   componentWillUnmount() {
     const refArchivos = firebase.database().ref("/Archivos/");
