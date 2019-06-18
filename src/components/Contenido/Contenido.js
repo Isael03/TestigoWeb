@@ -3,7 +3,7 @@ import Mapas from "../Mapa/Mapa";
 import ImageViewer from "../ImageViewer";
 import VideoViewer from "../VideoViewer";
 import Audio from '../AudioPlayer';
-import { Card, Container, Row, Col, Image, Figure } from "react-bootstrap";
+import { Card, Container, Row, Col, Image} from "react-bootstrap";
 import IconoMapa from "./Image/854878.png";
 import Imagen2 from "./Image/icono-calendario.png";
 /**
