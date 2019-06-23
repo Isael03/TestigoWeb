@@ -16,15 +16,16 @@ import firebase from "firebase/app";
 import database from '../../ObjectConfig/Firebase/Firebase'
 
 /**
- * @class Formulario de login e interaccion
+ * @class Formulario de login y validacion de datos con base de datos
  */
 class index extends Component {
   static contextType = AppContext;
   /**
    * @constructor 
+   * @param {*} props - Propiedades de la clase React
    */
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       institution: "",
       rut: "",
@@ -37,9 +38,9 @@ class index extends Component {
     this.onSubmit=this.props.onSubmit;
   }
   /**
-   * @description Invocar el metodo para recoger datos e iniciar sesion
-   * @property {*} - Indica el evento en el que se encuentra
-   * @property {boolean} open - variable open que aparece en el render y se usa para cambiar el estado de this.open
+   * @description Metodo para recoger datos del formulario y realizar la comprobacion de estos para iniciar sesion. si estan incorrectos se lanza una alerta
+   * @param {*} e - Indica el evento en el que se encuentra, en este caso usado para evitar la recarga de la pagina
+   * @param {boolean} open - variable open que aparece en el render y se usa para cambiar el estado de this.open
    */
   handleSubmit(e, open) {
     e.preventDefault();
@@ -60,8 +61,8 @@ class index extends Component {
   }
   
   /**
-   *@description Captar lo escrito en los inputs
-   *@property {*} e - evento que se desarrolla 
+   *@description Captar lo escrito en los inputs del formulario
+   *@param {*} e - evento que se desarrolla (entiendase como el input que esta recibiendo datos)
    */
   handleInputChange(e) {
     const { value, name } = e.target;

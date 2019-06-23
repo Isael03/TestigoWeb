@@ -4,8 +4,12 @@ import { Image, Modal} from "react-bootstrap";
 *@description Este componente muestra las imagenes y las expande
 */
 class index extends Component {
-  constructor(props, context) {
-    super(props, context);
+  /**
+   * @constructor
+   * @param {*} props - Propiedades de la clase React
+   */
+  constructor(props) {
+    super(props);
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -15,13 +19,13 @@ class index extends Component {
     };
   }
   /**
-   * @description Cerrar modal 
+   * @description Cambiar el estado de show a false para cerrar el modal 
    */
   handleClose() {
     this.setState({ show: false });
   }
   /** 
-   *@description Abrir modal
+   *@description Cambia el estado de show a true para abrir el modal
    */
   handleShow() {
     this.setState({ show: true });
@@ -33,7 +37,9 @@ class index extends Component {
         <figure>
           <Image
             src={this.props.ruta}
-            className="d-block w-100"
+            className=" w-100"
+            width={500}
+            height={260}
             alt="Responsive image"
             onClick={this.handleShow}
           />

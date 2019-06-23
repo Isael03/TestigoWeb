@@ -11,7 +11,6 @@ import AppProvider from './components/AppProvider'
 class App extends Component {
 
   render() {
-
     return (
       <Router>
         <AppProvider>

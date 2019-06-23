@@ -7,12 +7,16 @@ import AppContext from '../../components/AppContext'
  */
 class index extends Component {
     static contextType = AppContext;
+    /**
+     * @constructor
+     * @param {*} props  - Propiedades de la clase React
+     */
     constructor(props){
         super(props);
         this.onLogout=this.onLogout.bind(this);      
     }
     /**
-     * @description Este metodo retorna al usuario al login
+     * @description Este metodo retorna al usuario al login e invoca el metodo destroySession desde el AppProvider 
      */
     onLogout() {
         this.context.destroySession();

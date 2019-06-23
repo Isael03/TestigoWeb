@@ -13,6 +13,8 @@ import imgLogout from "./Image/logout.png";
 import AppContext from "../AppContext";
 import firebase from "firebase/app";
 import Cookies from "universal-cookie";
+import Carga from '../Carga/Carga'
+
 /**
  *@description Este componente sirve para mostrar el contenido que se encuentra en la BD
  */
@@ -25,6 +27,7 @@ class menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
       filter: "all",
       filesdb: []
     };
@@ -33,31 +36,31 @@ class menu extends Component {
     this.watchVideos = this.watchVideos.bind(this);
     this.watchImages = this.watchImages.bind(this);
     this.handleChangeView = this.handleChangeView.bind(this);
-    this.getFileExtension = this.getFileExtension.bind(this);   
+    this.getFileExtension = this.getFileExtension.bind(this); 
   }
   /**
    * @description Metodo que se inicia cuando el componente se monta. Recoje los datos de la bd y los traspasa al estado filesdb
    */
   componentDidMount() {
-    try {
-      var list = [];
+     try {
       var cookies = new Cookies();
       const refArchivos = firebase.database().ref("/Archivos/");
       refArchivos
         .orderByChild("Institucion/" + cookies.get("institution"))
         .equalTo(true)
         .on("value", snapshot => {
-          list =
+          var list =
             snapshot.val() !== null
-              ? Object.values(snapshot.val())
-              : snapshot.val();
-          this.setState({
-            filesdb: list
+              ? Object.values(snapshot.val()) : snapshot.val();
+          this.setState({           
+            filesdb: list,
+            loading: false           
           });
         });
     } catch (error) {
       console.log(error);
-    }
+      this.setState({loading: false});
+    } 
   }
 
   /**
@@ -201,9 +204,9 @@ class menu extends Component {
       }
     }
   }
-
   render() {
-    this.context.Validated();
+    this.context.Validated();   
+    if(this.state.loading){return (<Carga/>);}
     document.body.style.backgroundColor = "white";
     return (
       <Container id="home" fluid className="p-0">

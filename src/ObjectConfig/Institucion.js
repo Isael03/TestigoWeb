@@ -1,5 +1,5 @@
 /**
- * @class Esta clase es para instaciar a los servicios de emergencia 
+ * @class Esta clase es para instanciar a los servicios de emergencia 
  */
 class Institucion{
     /**

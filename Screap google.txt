@@ -1,0 +1,34 @@
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142495156-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-142495156-1');
+</script>
+
+
+*Instalar herramientas de firebase
+npm install -g firebase-tools
+
+*Iniciar sesion con tu cuenta de gmail
+
+firebase login
+
+
+*Iniciar firebase
+firebase init
+
+Desplazate hasta hosting, presiona espacio para seleccionar y enter para seguir
+
+Selecciona el proyecto testigo...
+
+Si te pregunta por una single page (public) escribe "dist", luego "y" para aceptar lo que dice
+Te creara una carpeta llamada dist y otras carpetas
+En el archivo firebase.json en donde dice dist lo reemplazas por build y guardas
+luego ejecutas el comando
+firebase deploy
+
+
+https://react-slick.neostack.com/docs/example/custom-paging/

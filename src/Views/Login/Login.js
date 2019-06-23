@@ -5,6 +5,10 @@ import FormLogin from '../../components/FormLogin'
  * @description Este Componente sirve para mostrar el formulario de Ingreso a la plataforma 
  */
 class login extends Component {
+  /**
+   * @constructor
+   * @param {*} props - Propiedades de la clase React
+   */
   constructor(props){
     super(props);
     this.onSubmit=this.onSubmit.bind(this);

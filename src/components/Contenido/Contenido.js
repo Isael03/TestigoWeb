@@ -12,6 +12,7 @@ import Imagen2 from "./Image/icono-calendario.png";
 class Contenido extends Component {
 /**
  * @constructor
+ * @param {*} props - Propiedades de la clase React
  */
   constructor(props) {
     super(props);
@@ -19,13 +20,6 @@ class Contenido extends Component {
     this.handleprintAudio=this.handleprintAudio.bind(this);
     this.handlePrintComment=this.handlePrintComment.bind(this);
     this.containerFiles=this.props.filtrar;
-  }
-
-  /**
-   * @description Cambia el estado de ViewContents, que establece el parametro del filtrado
-   */
-  componentWillReceiveProps(menuFilter, type) {
-    this.setState({ ViewContents: menuFilter });
   }
 
   /** 
@@ -47,16 +41,16 @@ class Contenido extends Component {
   }
 
   /**
-   *@description Comprueba que exista una ruta para el audio
+   *@description Comprueba que exista una ruta para el audio en caso de existir aparece un mensaje indicando que no existe
    *@param {string} Is_there_audio - corresponde a la ruta o enlace del audio
    *@return {string}
    */
   handleprintAudio(Is_there_audio){
-    var audio = Is_there_audio !== "" ? <Audio ruta={Is_there_audio} /*ruta={this.getFile(filename)}*//> : <h2 className="text-center">No hay grabacion disponible</h2>     
+    var audio = Is_there_audio !== "" ? <Audio ruta={Is_there_audio} /> : <h2 className="text-center">No hay grabacion disponible</h2>     
     return audio;
   }
   /**
-   *@description Comprueba que exista un comentario
+   *@description Comprueba que exista un comentario y lo imprime o en caso deque no exista, aparece una advertecia que no existe. 
    *@param {string} Is_there_comment - Corresponde al comentario que el usuario puede o no enviar
    *@return {string}
    */
@@ -96,15 +90,11 @@ class Contenido extends Component {
                                 />
                               </figure>
   
-                              <figure className="ires ">
+                              <figure className=" ires">
                                 <Image
                                   src={Imagen2}
                                   alt="Responsive image"
-                                  width="10%"
-                                  max-width="100%"
-                                  height="auto"
-                                  className="icon-info small-icon"
-                                  
+                                  className="icon-info small-icon"                            
                                 />
                                  <small className="text-muted ires">
                                 {this.props.fecha}

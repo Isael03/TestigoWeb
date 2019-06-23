@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
  * @description Este componente renderiza el reproductor de audio
  */
 class index extends Component {
+  /**
+   * @constructor
+   * @param {*} props - Propiedades de la clase React
+   */
 constructor(props) {
     super(props);
     this.ruta=this.props.ruta;
@@ -23,9 +27,9 @@ constructor(props) {
   }
 }
 /**
- *@param {*} ruta recibe la ruta del audio desde el componente Contenido 
+ *@param {*} ruta indica que la propiedad ruta corresponde a tipo string que es obligatoriamente necesaria
  */
 index.propTypes = {
-    ruta: PropTypes.string
+    ruta: PropTypes.string.isRequired
   };
 export default index;

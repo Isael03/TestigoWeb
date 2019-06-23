@@ -7,8 +7,12 @@ import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
  * @description Este componente despliega un modal que contiene al mapa
  */
 class Mapa extends Component {
-  constructor(props, context) {
-    super(props, context);
+  /**
+   * @constructor
+   * @param {*} props - Propiedades de la clase React
+   */
+  constructor(props) {
+    super(props);
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -20,19 +24,19 @@ class Mapa extends Component {
     };
   }
   /**
-   *@description Pasar Metodo al componente contenido
+   *@description Metodo que se inicia automaticamente al abrir el componente y traspasar el metodo de abrir el modal(handleShow) del mapa al componente contenido
    */
   componentDidMount() {
     this.props.shareMethods(this.handleShow.bind(this));
   }
   /**
-   *@description Cerrar modal
+   *@description Cambiar el estado show a false para cerrar el modal
    */
   handleClose() {
     this.setState({ show: false });
   }
   /**
-   *@description Abrir modal
+   *@description Cambiar el estado show a true para abrir el modal
    */
   handleShow() {
     this.setState({ show: true });

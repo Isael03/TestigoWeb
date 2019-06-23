@@ -1,7 +1,9 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
-import 'firebase/storage'
-
+/**
+ * @description Inicializa la conexion con el servicio de base de datos de firebase
+ * @param {*} config - Contiene la informacion para acceder a Realtime Database de firebase
+ */
   var config = {
     apiKey: "AIzaSyDR1M5RNY93THt2mWvZArUYLX-q4XRtwJc",
     authDomain: "testigo-18a8c.firebaseapp.com",
@@ -15,6 +17,5 @@ import 'firebase/storage'
 
 
   var database = firebase.database();
-  var storage = firebase.storage();
 
-  export default {database, storage};
+  export default database;

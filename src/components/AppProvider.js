@@ -9,13 +9,14 @@ import Cookies from "universal-cookie";
 class AppProvider extends Component {
   /**
    * @constructor
+   * @param {*} props - Propiedades de la clase React
    */
   constructor(props) {
     super(props);
-    this.state = {
+    /* this.state = {
       institution: null,
       user:false
-    };
+    }; */
     this.changeInstitution = this.changeInstitution.bind(this);
     this.destroySession = this.destroySession.bind(this);
     this.Validated = this.Validated.bind(this);
@@ -28,9 +29,9 @@ class AppProvider extends Component {
    * @param {string} nameService - Puede recibir cualquiera de las tres cadenas: Carabineros, Bomberos y Ambulancias
    */
   changeInstitution(nameService) {
-    this.setState({
+    /* this.setState({
       institution: nameService
-    });
+    }); */
     var cookies = new Cookies();
     cookies.set("institution", nameService, { path: "/" });
   }
@@ -46,9 +47,9 @@ class AppProvider extends Component {
     if(name==="rut"){
       var cookies = new Cookies();
       cookies.set("rut", value, { path: "/" }); 
-      this.setState({
+      /* this.setState({
         user:true
-      })     
+      }) */     
     }    
   }
  
@@ -64,7 +65,7 @@ class AppProvider extends Component {
   }
  
   /**
-   * @description Metodo que devuelve los valores de los estados por defecto
+   * @description Metodo que devuelve los valores de los estados por defecto y destruye las cookies creadas
    */
   destroySession() {
     this.setState({
