@@ -90,9 +90,11 @@ class Contenido extends Component {
                                 width={40}
                                 height={40}                               
                               />
-                              <small className="text-muted ires">
+                              <Container> 
+                                 <small className="text-muted ires">
                                 {this.props.fecha}
                               </small>
+                              </Container>                            
                             </figure>
                             </Col>
                         </Row>
