@@ -1,20 +1,6 @@
 .minh-90 {
   height: 90vh;
 }
-
-.ires{
-  display:block;
-  margin:auto;
-}
-.icon-info{
-  width: 100px;
-  height: 70px;
-  padding-left: 50px;
-}
-.small-icon{
-width: 80px;
-height: 35px; 
-}
 .pos{
   position: absolute;
   top: 0.5rem;

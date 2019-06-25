@@ -126,9 +126,8 @@ class Contenido extends Component {
                               <small className="text-muted ires">
                                 {this.props.fecha}
                               </small>
-                            </figure></Col>
-                            
-                          
+                            </figure>
+                            </Col>                                                  
                         </Row>
                       </Container>
                     </Col>

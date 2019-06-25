@@ -70,29 +70,30 @@ class Contenido extends Component {
                         {this.context.handlePrintComment(this.props.comentario)}
                         {this.context.handleprintAudio(this.props.audio)}
                         <Row className="mt-4 ">
-                          <Col className="d-flex ">
-                            <figure className="icon-info ires">
+                        <Col className="d-flex justify-content-center">
+                            <figure>
                               <Image
                                 src={IconoMapa}
                                 alt="Responsive image"
-                                width="100%"
-                                max-width="100"
-                                height="auto"
                                 onClick={() => this.handleShow()}
-                              />
+                                width={50}
+                                height={55} 
+                                />
                             </figure>
-
-                            <figure className=" ires">
+                            </Col>
+                            <Col className="d-flex justify-content-center text-center">
+                            <figure>
                               <Image
                                 src={Imagen2}
                                 alt="Responsive image"
-                                className="icon-info small-icon"
+                                width={40}
+                                height={40}                               
                               />
                               <small className="text-muted ires">
                                 {this.props.fecha}
                               </small>
                             </figure>
-                          </Col>
+                            </Col>
                         </Row>
                       </Container>
                     </Col>
