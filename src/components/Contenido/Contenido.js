@@ -127,7 +127,7 @@ class Contenido extends Component {
                                 {this.props.fecha}
                               </small>
                             </figure>
-                            </Col>                                                  
+                            </Col>            
                         </Row>
                       </Container>
                     </Col>
