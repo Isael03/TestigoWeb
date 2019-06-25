@@ -14,6 +14,9 @@ import AppContext from "../AppContext";
 import firebase from "firebase/app";
 import Cookies from "universal-cookie";
 import Carga from '../Carga/Carga'
+import ShowVideos from '../Contenido/ContenidoVideo'
+import ShowImages from '../Contenido/ContenidoImagen'
+
 
 /**
  *@description Este componente sirve para mostrar el contenido que se encuentra en la BD
@@ -36,7 +39,7 @@ class menu extends Component {
     this.watchVideos = this.watchVideos.bind(this);
     this.watchImages = this.watchImages.bind(this);
     this.handleChangeView = this.handleChangeView.bind(this);
-    this.getFileExtension = this.getFileExtension.bind(this); 
+    this.getFile = this.getFile.bind(this); 
   }
   /**
    * @description Metodo que se inicia cuando el componente se monta. Recoje los datos de la bd y los traspasa al estado filesdb
@@ -102,31 +105,35 @@ class menu extends Component {
     });
   }
   /**
-   * @description Obtiene la extension del archivo y devuelve si corresponde a video o imagen
-   * @param {string} filename - Corresponde a la ruta del archivo
-   * @return {string}
+   * @description Obtiene la extension del archivo y devuelve un array con direcciones de videos o imagenes, dependediendo del estodo de filter
+   * @param {array} filename - Corresponde a la ruta del archivo
+   * @return {array}
    */
-  getFileExtension(filename) {
-    var extension = filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
+  getFile(filename) {
+
     const video_extension = ["mp4", "3gp", "3gpp" , "3gpp2" , "mpeg", "mov"]; //webm mpg avi mkv m4v 
     const image_extension = ["jpg", "png","jpeg"];
-    var type = "";
-    for (var i = 0; i < video_extension.length; i++) {
-      if (video_extension[i].toLowerCase() === extension) {
-        type = "Video";
-        break;
+
+    const array = filename.map((filename) =>{
+      if(this.state.filter==="only-videos"){
+        for (var i = 0; i < video_extension.length; i++) {
+          if (video_extension[i] === filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2).toLowerCase()) {
+              return filename 
+          }
+        } 
       }
-    }
-    if (type === "") {
-      for (var j = 0; j < image_extension.length; j++) {
-        if (image_extension[j].toLowerCase() === extension) {
-          type = "Imagen";
-          break;
-        }
-      }
-    }
-    return type;
+      if(this.state.filter==="only-images"){
+        for (var j = 0; j < image_extension.length; j++) {
+          if (image_extension[j] === filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2).toLowerCase()) {
+              return filename
+          }
+        } 
+      }     
+    }) 
+    const result = array.filter(array => array !== undefined);
+    return result;
   }
+
   
   /**
    * @description handleChangeView cambia el contenido de la pantalla dependediendo del estado del filter
@@ -148,7 +155,6 @@ class menu extends Component {
                   comentario={filesdb.Comentario}
                   audio={filesdb.Audio}
                   archivo={filesdb.Archivo}
-                  filtrar={this.getFileExtension}
                   latitud={filesdb.Ubicacion.Latitud}
                   longitud={filesdb.Ubicacion.Longitud}
                 />
@@ -159,21 +165,21 @@ class menu extends Component {
         //Para videos
         if (filter === "only-videos") {
           View = this.state.filesdb
-            .map((filesdb, i) => {
-              if (this.getFileExtension(filesdb.Archivo) === "Video") {
+            .map((filesdb, i) => {     
+              if(this.getFile(filesdb.Archivo).length !== 0){
                 return (
-                  <Contenido
+                  <ShowVideos
                     fecha={filesdb.Fecha}
                     key={i}
                     comentario={filesdb.Comentario}
                     audio={filesdb.Audio}
-                    archivo={filesdb.Archivo}
-                    filtrar={this.getFileExtension}
+                    archivo={this.getFile(filesdb.Archivo)}
                     latitud={filesdb.Ubicacion.Latitud}
                     longitud={filesdb.Ubicacion.Longitud}
                   />
                 );
-              }
+              }            
+                
             })
             .reverse();
         }
@@ -181,15 +187,14 @@ class menu extends Component {
         if (filter === "only-images") {
           View = this.state.filesdb
             .map((filesdb, i) => {
-              if (this.getFileExtension(filesdb.Archivo) === "Imagen") {
+              if(this.getFile(filesdb.Archivo).length >0){
                 return (
-                  <Contenido
+                  <ShowImages
                     fecha={filesdb.Fecha}
                     key={i}
                     comentario={filesdb.Comentario}
                     audio={filesdb.Audio}
-                    archivo={filesdb.Archivo}
-                    filtrar={this.getFileExtension}
+                    archivo={this.getFile(filesdb.Archivo)}
                     latitud={filesdb.Ubicacion.Latitud}
                     longitud={filesdb.Ubicacion.Longitud}
                   />

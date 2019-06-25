@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import AppContext from "./AppContext";
 import { withRouter } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { Card} from "react-bootstrap";
+import Audio from "./AudioPlayer";
 
 /**
  * @description Componente utilizado para establecer controlar otros estados y metodos, y traspasarlos a los componentes hijos
@@ -13,14 +15,13 @@ class AppProvider extends Component {
    */
   constructor(props) {
     super(props);
-    /* this.state = {
-      institution: null,
-      user:false
-    }; */
+
     this.changeInstitution = this.changeInstitution.bind(this);
     this.destroySession = this.destroySession.bind(this);
     this.Validated = this.Validated.bind(this);
     this.ChangeState = this.ChangeState.bind(this);
+    this.handlePrintComment = this.handlePrintComment.bind(this);
+    this.handleprintAudio = this.handleprintAudio.bind(this);
   }
 
   
@@ -29,9 +30,6 @@ class AppProvider extends Component {
    * @param {string} nameService - Puede recibir cualquiera de las tres cadenas: Carabineros, Bomberos y Ambulancias
    */
   changeInstitution(nameService) {
-    /* this.setState({
-      institution: nameService
-    }); */
     var cookies = new Cookies();
     cookies.set("institution", nameService, { path: "/" });
   }
@@ -43,14 +41,7 @@ class AppProvider extends Component {
   ChangeState(name, value) {
     this.setState({
       [name]: value
-    });
-    if(name==="rut"){
-      var cookies = new Cookies();
-      cookies.set("rut", value, { path: "/" }); 
-      /* this.setState({
-        user:true
-      }) */     
-    }    
+    });    
   }
  
   /**
@@ -63,7 +54,36 @@ class AppProvider extends Component {
       return this.props.history.push("/");
     }
   }
- 
+  /**
+   *@description Comprueba que exista un comentario y lo imprime o en caso deque no exista, aparece una advertecia que no existe.
+   *@param {string} Is_there_comment - Corresponde al comentario que el usuario puede o no enviar
+   *@return {string}
+   */
+  handlePrintComment(Is_there_comment) {
+    var Comentario =
+      Is_there_comment !== "" ? (
+        <Card.Text>{Is_there_comment}</Card.Text>
+      ) : (
+        <h2 className="pb-2 text-center">Sin Comentario</h2>
+      );
+    return Comentario;
+  }
+
+    /**
+   *@description Comprueba que exista una ruta para el audio en caso de existir aparece un mensaje indicando que no existe
+   *@param {string} Is_there_audio - corresponde a la ruta o enlace del audio
+   *@return {string}
+   */
+  handleprintAudio(Is_there_audio) {
+    var audio =
+      Is_there_audio !== "" ? (
+        <Audio ruta={Is_there_audio} />
+      ) : (
+        <h2 className="text-center">No hay grabacion disponible</h2>
+      );
+    return audio;
+  }
+  
   /**
    * @description Metodo que devuelve los valores de los estados por defecto y destruye las cookies creadas
    */
@@ -83,7 +103,10 @@ class AppProvider extends Component {
           changeInstitution: this.changeInstitution,
           destroySession: this.destroySession,
           Validated: this.Validated,
-          ChangeState:this.ChangeState
+          ChangeState:this.ChangeState,
+          handlePrintComment:this.handlePrintComment,
+          handleprintAudio:this.handleprintAudio
+
         }}
       >
         {this.props.children}

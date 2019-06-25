@@ -34,16 +34,16 @@ class index extends Component {
   render() {
     return (
       <div>
-        <figure>
+       
           <Image
             src={this.props.ruta}
             className=" w-100"
-            width={500}
+            width={480}
             height={260}
             alt="Responsive image"
             onClick={this.handleShow}
           />
-        </figure>
+    
           <Modal show={this.state.show} onHide={this.handleClose} size="xl" className="d-flex align-items-center">   
               <Image
                 src={this.props.ruta}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import PropTypes from 'prop-types';
+import {Container } from "react-bootstrap";
 /**
  * @description Este componente renderiza el reproductor de audio
  */
@@ -16,13 +17,13 @@ constructor(props) {
 
   render() {
     return (
-      <div>
+      <Container>
         <AudioPlayer
           className="progress-bar-wrapper toggle-play-wrapper flex"
           src={this.ruta}
           onPlay={e => console.log("Play")}
         />
-      </div>
+      </Container>
     );
   }
 }

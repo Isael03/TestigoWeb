@@ -5,13 +5,13 @@ import 'firebase/database'
  * @param {*} config - Contiene la informacion para acceder a Realtime Database de firebase
  */
   var config = {
-    apiKey: "AIzaSyDR1M5RNY93THt2mWvZArUYLX-q4XRtwJc",
-    authDomain: "testigo-18a8c.firebaseapp.com",
-    databaseURL: "https://testigo-18a8c.firebaseio.com",
-    projectId: "testigo-18a8c",
-    storageBucket: "testigo-18a8c.appspot.com",
-    messagingSenderId: "652448395046",
-    appId: "1:652448395046:web:742327bbf04297c9"
+    apiKey: "AIzaSyAQmufnViOw6WWt6O6xyYjt6eBQcXSn_EQ",
+    authDomain: "pseudogram-cd82f.firebaseapp.com",
+    databaseURL: "https://pseudogram-cd82f.firebaseio.com",
+    projectId: "pseudogram-cd82f",
+    storageBucket: "pseudogram-cd82f.appspot.com",
+    messagingSenderId: "513649964517",
+    appId: "1:513649964517:web:d76c3437f9d9f3fc"
   };
   firebase.initializeApp(config);
 
