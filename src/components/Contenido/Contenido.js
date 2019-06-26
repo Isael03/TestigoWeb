@@ -86,7 +86,7 @@ class Contenido extends Component {
           latitud={this.props.latitud}
           longitud={this.props.longitud}
         />
-        <Container className="my-3">
+        <Container className="my-3 ">
           <Row>
             <Col className="p-0">
               <Card>

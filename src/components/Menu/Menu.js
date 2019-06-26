@@ -32,21 +32,23 @@ class menu extends Component {
     this.state = {
       loading: true,
       filter: "all",
-      filesdb: []
-    };
+      filesdb: [],
+      institucion: ""
+    }
     this.Logout = this.Logout.bind(this);
     this.watchAll = this.watchAll.bind(this);
     this.watchVideos = this.watchVideos.bind(this);
     this.watchImages = this.watchImages.bind(this);
     this.handleChangeView = this.handleChangeView.bind(this);
     this.getFile = this.getFile.bind(this); 
+    this.css = this.css.bind(this)
   }
   /**
    * @description Metodo que se inicia cuando el componente se monta. Recoje los datos de la bd y los traspasa al estado filesdb
    */
   componentDidMount() {
+    var cookies = new Cookies();
      try {
-      var cookies = new Cookies();
       const refArchivos = firebase.database().ref("/Archivos/");
       refArchivos
         .orderByChild("Institucion/" + cookies.get("institution"))
@@ -57,7 +59,8 @@ class menu extends Component {
               ? Object.values(snapshot.val()) : snapshot.val();
           this.setState({           
             filesdb: list,
-            loading: false           
+            loading: false,
+            institucion:cookies.get("institution")           
           });
         });
     } catch (error) {
@@ -209,12 +212,24 @@ class menu extends Component {
       }
     }
   }
+  css(){
+    if(this.state.institucion==="Carabineros"){
+      return "px-3 badge badge-success"
+    }
+    if(this.state.institucion==="Bomberos"){
+      return "px-3 badge badge-danger"
+    }
+    if(this.state.institucion==="Ambulancias"){
+      return "px-3 badge badge-secondary"
+    }
+
+  }
   render() {
     this.context.Validated();   
     if(this.state.loading){return (<Carga/>);}
     document.body.style.backgroundColor = "white";
     return (
-      <Container id="home" fluid className="p-0">
+      <Container fluid className="p-0">
         <Navbar
           collapseOnSelect
           expand="lg"
@@ -223,11 +238,14 @@ class menu extends Component {
           className="border-bottom border-danger d-flex"
         >
           <Navbar.Brand href="#home">
-            <h3 text="light">
-              <Badge variant="secondary" className="px-5 badge badge-secondary">
-                Testigo
+          
+          <h4 text="light">              
+              <Badge variant="secondary" className={this.css()}>
+                Testigo {this.state.institucion}
               </Badge>
-            </h3>
+            </h4>
+          
+            
           </Navbar.Brand>
           <Nav className="d-flex justify-content-end" position="relative">
             <Nav.Link className="pos">

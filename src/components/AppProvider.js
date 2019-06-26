@@ -106,7 +106,6 @@ class AppProvider extends Component {
           ChangeState:this.ChangeState,
           handlePrintComment:this.handlePrintComment,
           handleprintAudio:this.handleprintAudio
-
         }}
       >
         {this.props.children}

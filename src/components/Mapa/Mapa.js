@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Container } from "react-bootstrap";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 
 
@@ -48,10 +48,10 @@ class Mapa extends Component {
       <Modal show={this.state.show} onHide={this.handleClose} size="xl">
         <Modal.Header closeButton />
         <Modal.Body>
-          <div style={{ height: "80vh", width: "100%" }}>
+          <div style={{ height: "80vh", width: "100%" }} >
             <Map
               google={this.props.google}
-              style={{ width: "95%", height: "95%", position: "center" }}
+              style={{ width: "94%", height: "95%", position: "center" }}
               className={"map"}
               initialCenter={{ lat:this.latitud, lng: this.longitud}}
               zoom={18}
