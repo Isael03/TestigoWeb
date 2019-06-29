@@ -22,6 +22,8 @@ class AppProvider extends Component {
     this.ChangeState = this.ChangeState.bind(this);
     this.handlePrintComment = this.handlePrintComment.bind(this);
     this.handleprintAudio = this.handleprintAudio.bind(this);
+    this.logged = this.logged.bind(this);
+    this.institutionCreated = this.institutionCreated.bind(this)
   }
 
   
@@ -49,10 +51,9 @@ class AppProvider extends Component {
    */
   Validated() {
     var cookies = new Cookies();
-    cookies.get()
     if ((cookies.get("institution") === undefined)) {
       return this.props.history.push("/");
-    }
+    }   
   }
   /**
    *@description Comprueba que exista un comentario y lo imprime o en caso deque no exista, aparece una advertecia que no existe.
@@ -83,18 +84,33 @@ class AppProvider extends Component {
       );
     return audio;
   }
-  
   /**
-   * @description Metodo que devuelve los valores de los estados por defecto y destruye las cookies creadas
+   * @description Crea una cookie con la institucion escogida y envia al usuario a la seccion de contenido
+   * @param {string} institucion 
+   */
+  logged(institucion){
+    this.changeInstitution(institucion);
+    return this.props.history.push("/content");
+  }
+  /**
+   * @description Si la cookie institucion esta previamente definida envia al usuario a la seccion contenido
+   */
+  institutionCreated(){
+    var cookies = new Cookies();
+    if (cookies.get("institution") !== undefined) {
+    return this.props.history.push("/content");
+    } 
+  }
+
+  /**
+   * @description Metodo que destruye las cookies creadas y retorna al usuario al login
    */
   destroySession() {
-    this.setState({
-      institution: null,
-    });
     var cookies = new Cookies();
     cookies.remove('institution');
-    cookies.remove('rut');
+    return this.props.history.push("/");
   }
+  
   render() {
     return (
       <AppContext.Provider
@@ -105,7 +121,9 @@ class AppProvider extends Component {
           Validated: this.Validated,
           ChangeState:this.ChangeState,
           handlePrintComment:this.handlePrintComment,
-          handleprintAudio:this.handleprintAudio
+          handleprintAudio:this.handleprintAudio,
+          logged:this.logged,
+          institutionCreated: this.institutionCreated
         }}
       >
         {this.props.children}

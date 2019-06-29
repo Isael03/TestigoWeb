@@ -46,11 +46,12 @@ class index extends Component {
     e.preventDefault();
 
     var operador = new Operador(this.state.rut, this.state.password);
-     var service =new Institucion(this.state.institution);
+    var service =new Institucion(this.state.institution);
 
      firebase.database().ref("Institucion/"+service.id).ref.once("value").then(snapshot => {
-      if((snapshot.child(operador.rut).exists()) && (snapshot.child(operador.rut+"/Contrasena").val()).toString() === operador.contraseña){
-        this.props.onSubmit();
+      if((snapshot.child(operador.rut).exists()) && (snapshot.child(operador.rut+"/Contrasena").val()).toString() === operador.contraseña){     
+        this.context.logged(service.id); 
+        //this.props.onSubmit(service.id);
       }else{
         this.setState({ open: !open });
       }
@@ -69,15 +70,10 @@ class index extends Component {
     this.setState({
       [name]: value
     });
-    if(name==="institution"){
-      this.context.changeInstitution(value);
-    }
-    if(name==="rut"){
-      this.context.ChangeState(name, value);
-    }
   }
 
-  render() {
+  render() {   
+    this.context.institutionCreated()
     const { open } = this.state;
     document.body.style.backgroundColor = "rgb(173, 172, 172)";
     return (
@@ -101,7 +97,6 @@ class index extends Component {
                   <Form
                     className="container col-11 pt-3"
                     onSubmit={this.handleSubmit}
-                    //action='./menu'
                   >
                     <Form.Group
                       controlId="formGridState"
@@ -124,7 +119,7 @@ class index extends Component {
                         name="rut"
                         type="text"
                         placeholder="Rut"
-                        //required
+                     
                       />
                     </Form.Group>
                     <Form.Group
@@ -136,7 +131,7 @@ class index extends Component {
                         name="password"
                         type="password"
                         placeholder="Contraseña"
-                        //required
+                       
                       />
                     </Form.Group>
                     <Button

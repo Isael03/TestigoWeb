@@ -44,14 +44,15 @@ class index extends Component {
             onClick={this.handleShow}
           />
     
-          <Modal show={this.state.show} onHide={this.handleClose} size="xl" className="d-flex align-items-center">   
+          <Modal show={this.state.show} onHide={this.handleClose} size="xl" > 
+ 
               <Image
                 src={this.props.ruta}
-                className="d-block w-100"                 
-                height={950}           
+                className=" w-100"                           
                 alt="Responsive image"
                 onClick={this.handleClose}                
-              />          
+              /> 
+    
         </Modal>       
       </div>
     );

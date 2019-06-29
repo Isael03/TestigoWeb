@@ -81,7 +81,7 @@ class menu extends Component {
    * @description Desloguearse, invoca el metodo desde el componente Dashboard
    */
   Logout() {
-    this.props.logout();
+    this.context.destroySession();
   }
   /**
    * @description wacthAll cambia el estado del filtro a "all"
@@ -113,7 +113,6 @@ class menu extends Component {
    * @return {array}
    */
   getFile(filename) {
-
     const video_extension = ["mp4", "3gp", "3gpp" , "3gpp2" , "mpeg", "mov"]; //webm mpg avi mkv m4v 
     const image_extension = ["jpg", "png","jpeg"];
 
@@ -136,7 +135,6 @@ class menu extends Component {
     const result = array.filter(array => array !== undefined);
     return result;
   }
-
   
   /**
    * @description handleChangeView cambia el contenido de la pantalla dependediendo del estado del filter
@@ -247,7 +245,7 @@ class menu extends Component {
           
             
           </Navbar.Brand>
-          <Nav className="d-flex justify-content-end" position="relative">
+          <Nav className="d-flex justify-content-end navbar-right" position="relative">
             <Nav.Link className="pos">
               <figure>
                 <Image
