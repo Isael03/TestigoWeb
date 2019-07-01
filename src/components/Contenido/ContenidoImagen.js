@@ -25,10 +25,9 @@ class Contenido extends Component {
   acceptMethods = handleShow => {
     this.handleShow = handleShow;
   };
-
-  /**
-   *@description  Recupera la extension de los archivo, a traves del metodo recibido como propiedad de Menu e imprime las imagenes o videos en los contenedores que le correspondan
-   *@param {string} filename - Corresponde a la ruta del archivo
+    /**
+   *@description  Imprime las imagenes dentro del Carousel
+   *@param {array} filename - Corresponde a un array con las rutas del los archivo
    * @return {array}
    */
   handleprintContent(filename) {

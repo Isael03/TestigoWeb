@@ -113,7 +113,7 @@ class menu extends Component {
    * @return {array}
    */
   getFile(filename) {
-    const video_extension = ["mp4", "3gp", "3gpp" , "3gpp2" , "mpeg", "mov"]; //webm mpg avi mkv m4v 
+    const video_extension = ["mp4"]; //webm mpg avi mkv m4v "3gp", "3gpp" , "3gpp2" , "mpeg", "mov"
     const image_extension = ["jpg", "png","jpeg"];
 
     const array = filename.map((filename) =>{
@@ -235,17 +235,14 @@ class menu extends Component {
           variant="dark"
           className="border-bottom border-danger d-flex"
         >
-          <Navbar.Brand href="#home">
-          
+          <Navbar.Brand href="#home">         
           <h4 text="light">              
               <Badge variant="secondary" className={this.css()}>
                 Testigo {this.state.institucion}
               </Badge>
             </h4>
-          
-            
           </Navbar.Brand>
-          <Nav className="d-flex justify-content-end navbar-right" position="relative">
+          <Nav position="relative">
             <Nav.Link className="pos">
               <figure>
                 <Image

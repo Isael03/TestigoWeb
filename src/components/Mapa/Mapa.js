@@ -47,11 +47,11 @@ class Mapa extends Component {
     return (
       <Modal show={this.state.show} onHide={this.handleClose} size="xl">
         <Modal.Header closeButton />
-        <Modal.Body>
+        <Modal.Body style={{padding:0}}>
           <div style={{ height: "80vh", width: "100%" }} >
             <Map
               google={this.props.google}
-              style={{ width: "94%", height: "95%", position: "center" }}
+              style={{ width: "100%", height: "95%", position: "center" }}
               className={"map"}
               initialCenter={{ lat:this.latitud, lng: this.longitud}}
               zoom={18}
@@ -65,11 +65,11 @@ class Mapa extends Component {
             </Map>
           </div>
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           <Button variant="secondary" onClick={this.handleClose}>
             Close
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
     );
   }

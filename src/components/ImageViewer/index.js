@@ -44,11 +44,12 @@ class index extends Component {
             onClick={this.handleShow}
           />
     
-          <Modal show={this.state.show} onHide={this.handleClose} size="xl" > 
+          <Modal show={this.state.show} onHide={this.handleClose} centered  
+          className="fullscreen-modal" > 
  
               <Image
                 src={this.props.ruta}
-                className=" w-100"                           
+                className="modal-90w"                           
                 alt="Responsive image"
                 onClick={this.handleClose}                
               /> 

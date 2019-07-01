@@ -27,8 +27,8 @@ class Contenido extends Component {
   };
 
   /**
-   *@description  Recupera la extension de los archivo, a traves del metodo recibido como propiedad de Menu e imprime las imagenes o videos en los contenedores que le correspondan
-   *@param {string} filename - Corresponde a la ruta del archivo
+    *@description  Imprime los videos en el reproductor de video
+   *@param {array} filename - Corresponde a un array con las rutas del los archivo
    * @return {array}
    */
   handleprintContent(filename) {

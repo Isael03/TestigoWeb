@@ -30,7 +30,7 @@ class Contenido extends Component {
 
   /**
    *@description  Recupera la extension de los archivo, a traves del metodo containerFiles e imprime las imagenes o videos en los contenedores que le correspondan
-   *@param {string} filename - Corresponde a la ruta del archivo
+   *@param {array} filename - Corresponde a la ruta del archivo
    * @return {array}
    */
   handleprintContent(filename) {
