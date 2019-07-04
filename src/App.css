@@ -20,10 +20,6 @@
     transform: rotate(360deg);
   }
 }
-.modal-90w {
-  width: 95vw;
-  height: 95vh;
-}
 
 /*
 Full screen Modal 
@@ -63,3 +59,44 @@ Full screen Modal
     /* margin: 1.75rem auto; */
   }
 }
+
+/*Modal de imagen*/
+.modal-95h {
+  width: auto;
+  height: 95vh;
+}
+
+.img-modal .modal-dialog {
+ 
+  margin-right: auto;
+  margin-left: auto;
+  width: auto;
+  height: 95vh;
+}
+@media (min-width: 768px) {
+  .img-modal .modal-dialog {
+    width: auto;
+
+  }
+}
+@media (min-width: 992px) {
+  .img-modal .modal-dialog {
+    width: auto;
+
+  }
+}
+@media (min-width: 1200px) {
+  .img-modal .modal-dialog {
+    width: auto;
+
+  }
+}
+@media (min-width: 576px) {
+  .img-modal .modal-dialog {
+    max-width: auto;
+ 
+  }
+}
+
+
+

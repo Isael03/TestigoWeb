@@ -45,13 +45,13 @@ class Mapa extends Component {
   //------------------------
   render() {
     return (
-      <Modal show={this.state.show} onHide={this.handleClose} size="xl">
+      <Modal show={this.state.show} onHide={this.handleClose} className="fullscreen-modal">
         <Modal.Header closeButton />
         <Modal.Body style={{padding:0}}>
-          <div style={{ height: "80vh", width: "100%" }} >
+          <div style={{ height: "85vh", width: "100%" }} >
             <Map
               google={this.props.google}
-              style={{ width: "100%", height: "95%", position: "center" }}
+              style={{ width: "100%", height: "100%", position: "center" }}
               className={"map"}
               initialCenter={{ lat:this.latitud, lng: this.longitud}}
               zoom={18}

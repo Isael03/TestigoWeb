@@ -218,7 +218,7 @@ class menu extends Component {
       return "px-3 badge badge-danger"
     }
     if(this.state.institucion==="Ambulancias"){
-      return "px-3 badge badge-secondary"
+      return "px-3 badge badge-light border border-secondary"
     }
 
   }
@@ -235,9 +235,9 @@ class menu extends Component {
           variant="dark"
           className="border-bottom border-danger d-flex"
         >
-          <Navbar.Brand href="#home">         
+          <Navbar.Brand >         
           <h4 text="light">              
-              <Badge variant="secondary" className={this.css()}>
+              <Badge  className={this.css()}>
                 Testigo {this.state.institucion}
               </Badge>
             </h4>

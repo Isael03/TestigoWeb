@@ -63,7 +63,7 @@ class AppProvider extends Component {
   handlePrintComment(Is_there_comment) {
     var Comentario =
       Is_there_comment !== "" ? (
-        <Card.Text>{Is_there_comment}</Card.Text>
+        <Card.Text className="lead">{Is_there_comment}</Card.Text>
       ) : (
         <h2 className="pb-2 text-center">Sin Comentario</h2>
       );
