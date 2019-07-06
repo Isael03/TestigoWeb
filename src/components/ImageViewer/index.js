@@ -44,8 +44,7 @@ class index extends Component {
             onClick={this.handleShow}
           />
     
-          <Modal show={this.state.show} onHide={this.handleClose} centered  
-          centered> 
+          <Modal show={this.state.show} onHide={this.handleClose} centered  className="img-modal"> 
  
               <Image
                 src={this.props.ruta}
