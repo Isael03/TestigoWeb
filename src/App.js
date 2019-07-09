@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
-import Dashboard from './Views/Dashboard'
+import Home from './Views/Home'
 import Login from './Views/Login/Login.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AppProvider from './components/AppProvider'
@@ -16,7 +16,7 @@ class App extends Component {
         <AppProvider>
         <Switch>
           <Route path="/" exact component={Login} />
-          <Route path="/content" component={Dashboard} />
+          <Route path="/content" component={Home} />
         </Switch>
         </AppProvider>        
       </Router>

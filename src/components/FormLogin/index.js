@@ -14,7 +14,7 @@ import Institucion from "../../ObjectConfig/Institucion";
 import AppContext from '../AppContext'
 import firebase from "firebase/app";
 import database from '../../ObjectConfig/Firebase/Firebase'
-
+import bcrypt from 'bcryptjs';
 /**
  * @class Formulario de login y validacion de datos con base de datos
  */
@@ -34,8 +34,7 @@ class index extends Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.changeIntitution=this.props.changeInstitucion;
-    this.onSubmit=this.props.onSubmit;
+    this.Password_Verification=this.Password_Verification.bind(this);
   }
   /**
    * @description Metodo para recoger datos del formulario y realizar la comprobacion de estos para iniciar sesion. si estan incorrectos se lanza una alerta
@@ -44,14 +43,16 @@ class index extends Component {
    */
   handleSubmit(e, open) {
     e.preventDefault();
+   /*  bcrypt.hash('123456', 10, function(err, hash) {
+      console.log(hash)
+    });  */
 
     var operador = new Operador(this.state.rut, this.state.password);
     var service =new Institucion(this.state.institution);
 
      firebase.database().ref("Institucion/"+service.id).ref.once("value").then(snapshot => {
-      if((snapshot.child(operador.rut).exists()) && (snapshot.child(operador.rut+"/Contrasena").val()).toString() === operador.contraseña){     
-        this.context.logged(service.id); 
-        //this.props.onSubmit(service.id);
+      if((snapshot.child(operador.rut).exists())){ 
+        this.Password_Verification(operador.contraseña, snapshot.child(operador.rut+"/Contrasena").val(), service.id, open)
       }else{
         this.setState({ open: !open });
       }
@@ -60,7 +61,23 @@ class index extends Component {
         this.setState({ open: !open });
     });      
   }
-  
+  /**
+   * @description Verifica que la contraseña encriptada sea igual a la ingresada en el formulario
+   * @param {string} password - Contraseña proveniente del formulario
+   * @param {string} passwordBD - Contraseña de la BD
+   * @param {string} service - Institucion marcada en el formulario
+   * @param {boolean} open - Proveniente de la constante definida en el render
+   */
+
+  Password_Verification(password, passwordBD, service, open){
+    bcrypt.compare(password, passwordBD, (err, res)=> {
+      if(res){
+        this.context.logged(service); 
+      }else{
+        this.setState({ open: !open });
+      }
+  });
+  }  
   /**
    *@description Captar lo escrito en los inputs del formulario
    *@param {*} e - evento que se desarrolla (entiendase como el input que esta recibiendo datos)
