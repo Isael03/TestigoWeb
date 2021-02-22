@@ -1,9 +1,9 @@
-#Interfaz de plataforma web llamada Testigo
+# Interfaz de plataforma web llamada Testigo
 
 Proyecto realizado para asignatura de la carrera Analista Programador.
 Construida con reactjs y firebase.
 
-##Comandos
+## Comandos
 `npm install`
 `npm start`
 
